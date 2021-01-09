@@ -1,6 +1,9 @@
 html {
     margin: 0;
     padding: 0;
+    color: hsl(0, 0%, 100%);
+    font-family: 'Titillium Web', sans-serif;
+    box-sizing: border-box;
 }
 
 * {
@@ -20,15 +23,13 @@ header {
 
 .title {
     text-align: center;
-    color: white;
-    font-family: 'Titillium Web', sans-serif;
     font-size: 60px;
     margin-top: 80px;
+    text-shadow: 4px 2px 6px white;
 }
 
 .sub-title {
     text-align: center;
-    color: white;
     font-family: 'Titillium Web', sans-serif;
     font-size: 30px;
     margin-bottom: 80px;
@@ -49,16 +50,26 @@ ul, ol {
 }
 
 .menu li a {
-    background-color: black;
-    color: white;
+    background-color: hsl(0, 0%, 0%);
+    text-decoration: none;
+    color: hsl(0, 0%, 100%);
+    padding: 10px;
+    display: block;
+    border: 1px solid hsl(120, 100%, 25%);
+    cursor: pointer;
+}
+
+#menu-title {
+    background-color: hsl(0, 0%, 0%);
     text-decoration: none;
     padding: 10px;
     display: block;
-    border: 1px solid green;
+    border: 1px solid hsl(120, 100%, 25%);
+    cursor: pointer;
 }
 
 .menu li a:hover {
-    color: green;
+    color: hsl(120, 83%, 49%);
 }
 
 .menu li ul {
@@ -76,14 +87,13 @@ ul, ol {
 }
 
 body {
-    background-color: black;
-    color: white;
+    background-color: hsl(0, 0%, 0%);
 }
 
 .main {
-    background-color: black;
+    background-color: hsl(0, 0%, 0%);
     animation: gradiant 10s linear infinite;
-    background-image: linear-gradient(0deg, rgb(0, 0, 0),  rgb(23, 130, 50), rgb(0, 0, 0), rgb(23, 130, 50));
+    background-image: linear-gradient(0deg, hsl(0, 0%, 0%),  hsl(135, 70%, 30%), hsl(0, 0%, 0%), hsl(135, 70%, 30%));
     background-size: 100% 400%;
     height: 450px;
     width: 100%;
@@ -104,19 +114,16 @@ body {
     border-radius: 50%;
     max-width: 400px;
     flex: 1;
+    cursor: not-allowed;
 }
 
 #mini-title {
-    color: white;
-    font-family: 'Titillium Web', sans-serif;
     font-size: 35px;
     text-align: center;
     text-decoration: underline;
 }
 
 .description {
-    color: white;
-    font-family: 'Titillium Web', sans-serif;
     font-size: 15px;
     text-align: center;
 }
