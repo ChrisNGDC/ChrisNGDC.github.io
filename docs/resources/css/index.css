@@ -18,14 +18,17 @@ header {
     width: 100%;
     display: grid;
     grid-template-rows: repeat(2, 1fr);
-    align-content: center;
+    background-size: cover;
+    background-position: center;
+    position: relative;
 }
 
 .title {
     text-align: center;
     font-size: 60px;
     margin-top: 80px;
-    text-shadow: 4px 2px 6px white;
+    text-shadow: 4px 2px 6px black;
+    z-index: 1;
 }
 
 .sub-title {
@@ -33,6 +36,16 @@ header {
     font-family: 'Titillium Web', sans-serif;
     font-size: 30px;
     margin-bottom: 80px;
+    z-index: 1;
+}
+
+.overlay {
+    position: absolute;
+    min-height: 100%;
+    min-width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .menu {
@@ -135,4 +148,35 @@ body {
     100% { 
         background-position: 0% 0%; 
     }
+}
+
+.center {
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+
+td:hover {
+    background-color: hsl(0, 0%, 21%);
+}
+
+table, th, td {
+    border: 1px groove green;
+    text-align: center;
+    overflow-x:auto;
+    width: fit-content;
+    padding: 10px;
+    margin: 0;
+}
+
+footer {
+    height: 3rem;
+    background-color: hsl(120, 100%, 25%);
+    text-align: center;
+}
+
+.info {
+    position: relative;
+    bottom: -1rem;
 }
