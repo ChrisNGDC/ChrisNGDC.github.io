@@ -190,6 +190,7 @@ header .logo {
   .showcase,
   .showcase header
   {
+    margin-top: 20px;
     padding: 20px;
   }
   .text h2
