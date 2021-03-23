@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contacto</title>
+
+    <link href="./resources/css/index.css" type="text/css" rel="stylesheet">
+    <link rel="icon" href="./resources/images/icono-pagina.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+  </head>
+  <body>
+    <h2 class="center-text"> Contactar </h2>
+    <form class="center" id="contact">
+        <div class="contact-form">
+            <label for="Nombre"> Nombre y Apellido: </label>
+            <input type="text" name="Nombre" placeholder="Christian Gabor" required />
+        </div>    
+        <div class="contact-form">
+            <label for="Mail"> Mail: </label>
+            <input type="email" name="Mail" placeholder="ejemplo@gmail.com" required />
+        </div>
+        <div class="contact-form">
+            <label for="Asunto"> Asunto </label>
+            <br>
+            <textarea cols="50" rows="1" name="Asunto" required></textarea>
+        </div>
+        <div class="contact-form">
+            <label for="Mensaje"> Mensaje </label>
+            <br>
+            <textarea cols="100" rows="10" name="Mensaje" required></textarea>
+        </div>
+        <div class="contact-form">
+            <button type="button" onclick="submitMessage()"> Enviar Mensaje </button>
+        </div>
+    </form>
+  </body>
+</html>
