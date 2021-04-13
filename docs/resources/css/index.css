@@ -86,12 +86,12 @@ header .logo {
 .text {
   position: relative;
   z-index: 10;
-  max-width: 700px;
   min-height: fit-content;
   display: inline-block;
   text-align: center;
   justify-content: center;
   align-items: center;
+  
 }
 
 .text h2 {
@@ -100,6 +100,7 @@ header .logo {
   color: hsl(0, 0%, 100%);
   line-height: 1em;
   text-transform: uppercase;
+  max-width: 700px;
 }
 
 .text p {
@@ -195,12 +196,18 @@ header .logo {
   color: #fff;
   background: #6665ee;
 }
+.skills{
+  display: grid;
+  grid-auto-flow: column;
+  text-align: center;
+  width: 100%;
+  background: rgb(255, 255, 255);
+  border-radius: 10%;
+}
 .skill-bars{
   padding: 25px 30px;
-  width: 600px;
-  background: rgb(255, 255, 255);
-  box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
-  border-radius: 10px;
+  width: 100%;
+  float: left;
 }
 .skill-bars .bar{
   margin: 20px 0;
@@ -230,7 +237,7 @@ header .logo {
   transform: scaleX(0);
   transform-origin: left;
   border-radius: 10px;
-  box-shadow: inset 0 1px 1px rgba(0,0,0,0.05),
+  box-shadow: inset 0 1px 1px rgb(0, 0, 0),
               0 1px rgba(207, 207, 207, 0.8);
   animation: animate 1s cubic-bezier(1,0,0.5,1) forwards;
 }
