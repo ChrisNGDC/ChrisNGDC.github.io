@@ -15,9 +15,10 @@ export default class Bullet {
       ctx.drawImage(this.image, this.position.x, this.position.y);
     }
 
-    shoot(x_position) {
+    shoot(x_position, y_position) {
         this.status = "firing";
         this.position.x = x_position;
+        this.position.y = y_position;
     }
   
     update(delta_time) {
