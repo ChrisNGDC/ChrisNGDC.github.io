@@ -9,6 +9,7 @@ export default class InputHandler {
           player.move_right();
           break;
         case " ":
+          alert("espacio apretado");
           if (bullet.ready) {
             let x_position = player.position.x - bullet.width / 2;
             bullet.shot(x_position);
