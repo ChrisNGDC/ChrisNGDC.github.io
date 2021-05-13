@@ -26,6 +26,6 @@ export default class Enemy {
       }
     }
     this.speed = -this.speed;
-    this.position.y -= 64;
+    this.position.y += 64;
   }
 }
