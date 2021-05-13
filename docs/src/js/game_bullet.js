@@ -3,7 +3,8 @@ export default class Bullet {
       this.image = document.getElementById("bullet_img");
       this.width = 32;
       this.height = 32;
-      this.speed = 64;
+      this.max_speed = 64;
+      this.speed = 0;
       this.status = "ready";
       this.position = {
         x: game_width - this.width,
@@ -17,6 +18,7 @@ export default class Bullet {
 
     shoot(x_position, y_position) {
         this.status = "firing";
+        this.speed = this.max_speed;
         this.position.x = x_position;
         this.position.y = y_position;
     }
@@ -27,10 +29,16 @@ export default class Bullet {
         if (this.position.y < 0){
             this.position.y = 0;
             this.position.x = 0 - this.width;
+            this.speed = 0;
             this.status = "ready";
         }
         if (this.status == "firing"){
             this.position.y -= velocity;
+            if (this.position.y < 0) {
+                this.status = "ready";
+                this.position.y = 0;
+                this.position.x = 0 - this.width;
+            }
         }
     }
   }
