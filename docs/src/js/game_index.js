@@ -11,7 +11,7 @@ const game_height = 600;
 
 let player = new Player(game_width, game_height);
 let enemy = new Enemy(game_width);
-// let bullet = new Bullet(player)
+let bullet = new Bullet(player)
 
 new InputHandler(player);
 
@@ -23,10 +23,10 @@ function game_loop(time_stamp) {
     ctx.clearRect(0, 0, game_width, game_height);
     player.update(delta_time);
     enemy.update(delta_time);
-    //bullet.update(delta_time);
+    bullet.update(delta_time);
     player.draw(ctx);
     enemy.draw(ctx);
-    //bullet.draw(ctx);
+    bullet.draw(ctx);
 
     requestAnimationFrame(game_loop);
 }
