@@ -3,8 +3,7 @@ export default class Bullet {
       this.image = document.getElementById("bullet_img");
       this.width = 32;
       this.height = 32;
-      this.max_speed = 64;
-      this.speed = 0;
+      this.speed = 64;
       this.status = "ready";
       this.position = {
         x: game_width - this.width,
