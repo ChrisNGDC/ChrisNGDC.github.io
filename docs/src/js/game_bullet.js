@@ -19,18 +19,16 @@ export default class Bullet {
 
     shoot(x_position) {
         this.ready = false;
+        this.position.x = x_position;
     }
   
     update(delta_time) {
         if (!delta_time) return;
         let velocity = this.speed / delta_time;
-        if (this.position.y < 0 || this.ready) {
-            this.position.x = player.position.x - this.width / 2;
+        if (this.position.y < 0 || this.ready){
             this.position.y = player.position.y;
-        }
-        if (!this.ready) {
+        } else {
             this.position.y -= velocity;
-            return;
-            }
+        }
     }
   }
