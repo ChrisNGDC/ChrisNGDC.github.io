@@ -10,8 +10,6 @@ let player = new Player(game_width, game_height);
 
 let last_time = 0
 
-player.draw(ctx);
-
 function game_loop(time_stamp) {
     let delta_time = time_stamp -  last_time;
     last_time = time_stamp;
