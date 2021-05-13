@@ -11,7 +11,7 @@ const game_height = 600;
 
 let player = new Player(game_width, game_height);
 let enemy = new Enemy(game_width);
-//let bullet = new Bullet(player)
+let bullet = new Bullet(player);
 
 new InputHandler(player);
 
