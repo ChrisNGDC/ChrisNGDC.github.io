@@ -3,7 +3,7 @@ export default class Bullet {
       this.image = document.getElementById("bullet_img");
       this.width = 32;
       this.height = 32;
-      this.max_speed = 64;
+      this.max_speed = 128;
       this.speed = 0;
       this.status = "ready";
       this.position = {
