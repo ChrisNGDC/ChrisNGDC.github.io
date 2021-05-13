@@ -8,8 +8,8 @@ export default class Bullet {
       this.speed = 0;
       this.ready = false;
       this.position = {
-        x: player.position.x - this.width / 2,
-        y: player.position.y
+        x: game_max_width + this.width,
+        y: 0
       };
     }
   
@@ -26,7 +26,8 @@ export default class Bullet {
         if (!delta_time) return;
         let velocity = this.speed / delta_time;
         if (this.position.y < 0 || this.ready){
-            this.position.y = player.position.y;
+            this.position.y = 0;
+            this.position.x = this.game_max_width + this.width;
         } else {
             this.position.y -= velocity;
         }
