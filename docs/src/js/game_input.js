@@ -10,7 +10,7 @@ export default class InputHandler {
           break;
         case " ":
           if (bullet.status == "ready") {
-            bullet.shoot(player.position.x - bullet.width / 2, player.position.y);
+            bullet.shoot(player.position.x + bullet.width / 2, player.position.y);
           }
           break;
         default:
