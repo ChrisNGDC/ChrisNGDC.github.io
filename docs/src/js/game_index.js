@@ -1,6 +1,6 @@
 import Player from "./game_player.js";
 import Enemy from "./game_enemy.js"
-// import Bullet from "./game_bullet.js";
+//import Bullet from "./game_bullet.js";
 import InputHandler from "./game_input.js";
 
 let canvas =  document.getElementById("gameScreen");
@@ -11,7 +11,7 @@ const game_height = 600;
 
 let player = new Player(game_width, game_height);
 let enemy = new Enemy(game_width);
-let bullet = new Bullet(player)
+//let bullet = new Bullet(player)
 
 new InputHandler(player);
 
