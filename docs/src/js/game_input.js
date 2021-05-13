@@ -1,5 +1,5 @@
 export default class InputHandler {
-  constructor(player) {
+  constructor(player, bullet) {
     document.addEventListener("keydown", (event) => {
       switch (event.key) {
         case "ArrowLeft":
@@ -9,7 +9,10 @@ export default class InputHandler {
           player.move_right();
           break;
         case " ":
-          alert("shot");
+          if (bullet.ready) {
+            let x_position = player.position.x - bullet.width / 2;
+            bullet.shot(x_position);
+          }
           break;
         default:
           break;
@@ -23,9 +26,6 @@ export default class InputHandler {
           break;
         case "ArrowRight":
           if (player.speed > 0) player.stop();
-          break;
-        case " ":
-          alert("shot");
           break;
         default:
           break;
