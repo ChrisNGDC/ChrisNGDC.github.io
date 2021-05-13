@@ -26,12 +26,6 @@ export default class Bullet {
     update(delta_time) {
         if (!delta_time) return;
         let velocity = this.speed / delta_time;
-        if (this.position.y < 0){
-            this.position.y = 0;
-            this.position.x = 0 - this.width;
-            this.speed = 0;
-            this.status = "ready";
-        }
         if (this.status == "firing"){
             this.position.y -= velocity;
             if (this.position.y < 0) {
