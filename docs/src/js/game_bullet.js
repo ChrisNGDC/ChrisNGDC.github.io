@@ -1,5 +1,5 @@
 export default class Bullet {
-    constructor(player) {
+    constructor() {
       this.image = document.getElementById("bullet_img");
       this.game_max_width = game_width;
       this.width = 32;
