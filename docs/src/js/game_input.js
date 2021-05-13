@@ -10,6 +10,7 @@ export default class InputHandler {
           break;
         case " ":
           if (bullet.ready) {
+            alert("shooting bullet");
             let x_position = player.position.x - bullet.width / 2;
             bullet.shot(x_position);
           }

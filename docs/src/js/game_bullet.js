@@ -7,7 +7,7 @@ export default class Bullet {
       this.speed = 0;
       this.ready = true;
       this.position = {
-        x: game_width + this.width,
+        x: game_width,
         y: 0
       };
     }
