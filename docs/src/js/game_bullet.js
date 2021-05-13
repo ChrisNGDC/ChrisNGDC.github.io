@@ -1,14 +1,13 @@
 export default class Bullet {
-    constructor() {
+    constructor(game_width) {
       this.image = document.getElementById("bullet_img");
-      this.game_max_width = game_width;
       this.width = 32;
       this.height = 32;
       this.max_speed = 128;
       this.speed = 0;
       this.ready = false;
       this.position = {
-        x: game_max_width + this.width,
+        x: game_width + this.width,
         y: 0
       };
     }
