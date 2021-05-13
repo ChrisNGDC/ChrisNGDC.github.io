@@ -1,5 +1,5 @@
 export default class Enemy {
-  constructor(game_width, game_height) {
+  constructor(game_width) {
     this.image = document.getElementById("enemy_img");
     this.game_max_width = game_width;
     this.width = 64;
