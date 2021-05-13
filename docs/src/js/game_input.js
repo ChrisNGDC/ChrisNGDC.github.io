@@ -11,8 +11,7 @@ export default class InputHandler {
         case " ":
           if (bullet.status == "ready") {
             alert("shooting bullet");
-            let x_position = player.position.x - bullet.width / 2;
-            bullet.shot(x_position);
+            bullet.shot(player.position.x - bullet.width / 2);
           }
           break;
         default:
