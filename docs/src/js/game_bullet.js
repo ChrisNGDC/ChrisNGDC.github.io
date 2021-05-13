@@ -17,7 +17,6 @@ export default class Bullet {
     }
 
     shoot(x_position) {
-        alert("shooting");
         this.status = "firing";
         this.position.x = x_position;
     }
