@@ -1,8 +1,0 @@
-#gameScreen {
-    border: 1px solid black;
-    background-image: url('../images/game_background.png');
-}
-
-img {
-    display: none;
-}

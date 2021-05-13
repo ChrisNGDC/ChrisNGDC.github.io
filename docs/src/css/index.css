@@ -124,11 +124,11 @@ header .logo {
 }
 
 .verde {
-  background-image: url('../images/cubos-verdes.jpg');
+  background-image: url('../../resources/images/cubos-verdes.jpg');
 }
 
 .azul {
-  background-image: url('../images/cubos-azules.jpg');
+  background-image: url('../../resources/images/cubos-azules.jpg');
 }
 
 @keyframes gradiant {

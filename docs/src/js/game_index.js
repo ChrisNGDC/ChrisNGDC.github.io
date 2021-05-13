@@ -1,4 +1,5 @@
 import Player from "./game_player.js";
+import InputHandler from "./game_input.js";
 
 let canvas =  document.getElementById("gameScreen");
 let ctx = canvas.getContext("2d");
@@ -8,12 +9,14 @@ const game_height = 600;
 
 let player = new Player(game_width, game_height);
 
+new InputHandler(player);
+
 let last_time = 0
 
 function game_loop(time_stamp) {
     let delta_time = time_stamp -  last_time;
     last_time = time_stamp;
-    ctx.clearRec(0, 0, game_width, game_height);
+    ctx.clearRect(0, 0, game_width, game_height);
     player.update(delta_time);
     player.draw(ctx);
 
