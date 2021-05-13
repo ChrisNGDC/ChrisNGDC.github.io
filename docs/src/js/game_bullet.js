@@ -5,7 +5,7 @@ export default class Bullet {
       this.height = 32;
       this.max_speed = 128;
       this.speed = 0;
-      this.ready = true;
+      this.status = "ready";
       this.position = {
         x: game_width,
         y: 0
@@ -17,16 +17,17 @@ export default class Bullet {
     }
 
     shoot(x_position) {
-        this.ready = false;
+        this.status = "firing";
         this.position.x = x_position;
     }
   
     update(delta_time) {
         if (!delta_time) return;
         let velocity = this.speed / delta_time;
-        if (this.position.y < 0 || this.ready){
+        if (this.position.y < 0 || this.status == "ready"){
             this.position.y = 0;
             this.position.x = this.game_max_width + this.width;
+            this.status = "ready";
         } else {
             this.position.y -= velocity;
         }
