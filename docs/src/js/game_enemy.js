@@ -1,7 +1,8 @@
 export default class Enemy {
-  constructor(game_width) {
+  constructor(game_width, game_height) {
     this.image = document.getElementById("enemy_img");
     this.game_max_width = game_width;
+    this.game_max_height = game_height;
     this.width = 64;
     this.height = 64;
     this.max_speed = 32;
@@ -13,10 +14,12 @@ export default class Enemy {
   }
 
   random_y(){
-    if (~~(Math.random()*2))
+    if (~~(Math.random()*2)) {
       return this.height
-    else
+    } 
+    else {
       return this.height * 2;
+    }
   }
 
   draw(ctx) {
@@ -40,6 +43,9 @@ export default class Enemy {
       }
     }
     this.speed = -this.speed;
-    this.position.y += 64;
+    this.position.y += this.height;
+    if (this.position.y == this.game_max_height - this.height - 24) {
+      this.reset();
+    }
   }
 }
