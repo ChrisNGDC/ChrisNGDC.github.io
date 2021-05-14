@@ -15,7 +15,7 @@ export default class Enemy {
 
   random_y(){
     if (~~(Math.random()*2)) {
-      return this.height
+      return this.height;
     } 
     else {
       return this.height * 2;
