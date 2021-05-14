@@ -8,12 +8,24 @@ export default class Enemy {
     this.speed = 32;
     this.position = {
       x: game_width / 2 - this.width / 2,
-      y: 64
+      y: random_y()
     };
+  }
+
+  random_y(){
+    let posibles_y = [this.height, this.height * 2];
+    return posibles_y[~~(Math.random() * posibles_y.length)];
   }
 
   draw(ctx) {
     ctx.drawImage(this.image, this.position.x, this.position.y);
+  }
+
+  reset() {
+    this.position = {
+      x: game_width / 2 - this.width / 2,
+      y: random_y()
+    };
   }
 
   update(delta_time) {

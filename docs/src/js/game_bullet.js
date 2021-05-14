@@ -22,6 +22,12 @@ export default class Bullet {
         this.position.x = x_position;
         this.position.y = y_position;
     }
+
+    stop() {
+      this.status = "ready";
+      this.position.y = 0;
+      this.position.x = 0 - this.width;
+    }
   
     update(delta_time) {
         if (!delta_time) return;
@@ -29,9 +35,7 @@ export default class Bullet {
         if (this.status == "firing"){
             this.position.y -= velocity;
             if (this.position.y < 0) {
-                this.status = "ready";
-                this.position.y = 0;
-                this.position.x = 0 - this.width;
+                this.stop();
             }
         }
     }
