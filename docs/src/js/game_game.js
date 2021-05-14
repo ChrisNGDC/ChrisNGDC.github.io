@@ -17,22 +17,19 @@ export default class Game {
         this.game_objects = [
             this.player,
             this.bullet,
-            this.enemies
         ];
 
         new InputHandler(this.player, this.bullet);
     }
 
     update(delta_time) {
-        this.player.update(delta_time);
-        this.enemies.forEach(enemy => {
-            enemy.update(delta_time);
-        });
-        this.bullet.update(delta_time);
+        this.game_objects.forEach(object => object.update(delta_time));
+        this.enemies.forEach(enemy => enemy.update(delta_time));
     }
 
     draw(ctx) {
         this.game_objects.forEach(object => object.draw(ctx));
+        this.enemies.forEach(enemy => enemy.draw(ctx));
     }
 
     create_enemies() {
