@@ -1,5 +1,5 @@
 export default class Bullet {
-    constructor(game_width) {
+    constructor(game) {
       this.image = document.getElementById("bullet_img");
       this.width = 32;
       this.height = 32;
@@ -7,7 +7,7 @@ export default class Bullet {
       this.speed = 0;
       this.status = "ready";
       this.position = {
-        x: game_width + this.width,
+        x: game.game_width + this.width,
         y: 0
       };
     }

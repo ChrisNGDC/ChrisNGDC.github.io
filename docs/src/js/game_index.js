@@ -1,7 +1,4 @@
-import Player from "./game_player.js";
-import Enemy from "./game_enemy.js";
-import Bullet from "./game_bullet.js";
-import InputHandler from "./game_input.js";
+import Game from "./game_game";
 
 let canvas =  document.getElementById("gameScreen");
 let ctx = canvas.getContext("2d");
@@ -12,14 +9,8 @@ window.onload = window.onresize = function() {
     canvas.height = window.innerHeight * 0.8;
 }
 
-const game_width = 800;
-const game_height = 600;
-
-let player = new Player(game_width, game_height);
-let enemy = new Enemy(game_width, game_height);
-let bullet = new Bullet(game_width);
-
-new InputHandler(player, bullet);
+let game = new Game(800, 600);
+game.start();
 
 let last_time = 0;
 
@@ -27,12 +18,8 @@ function game_loop(time_stamp) {
     let delta_time = time_stamp -  last_time;
     last_time = time_stamp;
     ctx.clearRect(0, 0, game_width, game_height);
-    player.update(delta_time);
-    enemy.update(delta_time);
-    bullet.update(delta_time);
-    player.draw(ctx);
-    enemy.draw(ctx);
-    bullet.draw(ctx);
+    game.update(delta_time);
+    game.draw(ctx);
 
     requestAnimationFrame(game_loop);
 }
