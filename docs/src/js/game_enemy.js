@@ -13,8 +13,10 @@ export default class Enemy {
   }
 
   random_y(){
-    let posibles_y = [this.height, this.height * 2];
-    return posibles_y[~~(Math.random() * posibles_y.length)];
+    if (~~(Math.random()*2))
+      return this.height
+    else
+      return this.height * 2;
   }
 
   draw(ctx) {
