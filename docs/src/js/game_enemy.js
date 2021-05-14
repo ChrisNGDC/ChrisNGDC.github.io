@@ -44,7 +44,7 @@ export default class Enemy {
     }
     this.speed = -this.speed;
     this.position.y += this.height;
-    if (this.position.y == this.game_max_height - this.height - 24) {
+    if (this.position.y >= this.game_max_height - this.height - 24) {
       this.reset();
     }
   }
