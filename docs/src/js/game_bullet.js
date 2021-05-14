@@ -28,7 +28,7 @@ export default class Bullet {
     stop() {
       this.status = "ready";
       this.position = {
-        x: game_width + this.width,
+        x: 0 - this.width,
         y: 0
       };
     }
