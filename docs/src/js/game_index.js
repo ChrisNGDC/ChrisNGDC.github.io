@@ -6,6 +6,12 @@ import InputHandler from "./game_input.js";
 let canvas =  document.getElementById("gameScreen");
 let ctx = canvas.getContext("2d");
 
+window.onload = window.onresize = function() {
+    var canvas = document.getElementById('canvas');
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = window.innerHeight * 0.8;
+}
+
 const game_width = 800;
 const game_height = 600;
 
