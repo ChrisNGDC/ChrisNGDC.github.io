@@ -36,6 +36,9 @@ export default class Enemy {
   update(delta_time) {
     if (!delta_time) return;
     let velocity = this.speed / delta_time;
+    if (this.position.y >= this.game_max_height - this.height - 24) {
+      this.reset();
+    }
     if (this.position.x + velocity > 0) {
       if (this.position.x + velocity + this.width < this.game_max_width) {
         this.position.x += velocity;
@@ -44,8 +47,5 @@ export default class Enemy {
     }
     this.speed = -this.speed;
     this.position.y += this.height;
-    if (this.position.y >= this.game_max_height - this.height - 24) {
-      this.reset();
-    }
   }
 }
