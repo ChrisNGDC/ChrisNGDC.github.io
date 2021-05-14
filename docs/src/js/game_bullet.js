@@ -19,14 +19,18 @@ export default class Bullet {
     shoot(x_position, y_position) {
         this.status = "firing";
         this.speed = this.max_speed;
-        this.position.x = x_position;
-        this.position.y = y_position;
+        this.position = {
+          x: x_position,
+          y: y_position
+        }
     }
 
     stop() {
       this.status = "ready";
-      this.position.y = 0;
-      this.position.x = 0 - this.width;
+      this.position = {
+        x: game_width + this.width,
+        y: 0
+      };
     }
   
     update(delta_time) {

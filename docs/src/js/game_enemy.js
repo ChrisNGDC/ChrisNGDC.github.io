@@ -23,12 +23,12 @@ export default class Enemy {
     ctx.drawImage(this.image, this.position.x, this.position.y);
   }
 
-  reset() {
+  /* reset() {
     this.position = {
       x: game_width / 2 - this.width / 2,
       y: random_y()
     };
-  }
+  } */
 
   update(delta_time) {
     if (!delta_time) return;

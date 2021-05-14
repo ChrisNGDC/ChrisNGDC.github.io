@@ -15,7 +15,7 @@ let bullet = new Bullet(game_width);
 
 new InputHandler(player, bullet);
 
-let last_time = 0
+let last_time = 0;
 
 function game_loop(time_stamp) {
     let delta_time = time_stamp -  last_time;
