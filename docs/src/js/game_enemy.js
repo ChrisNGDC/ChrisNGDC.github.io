@@ -28,7 +28,7 @@ export default class Enemy {
 
   reset() {
     this.position = {
-      x: game_width / 2 - this.width / 2,
+      x: this.game_max_width / 2 - this.width / 2,
       y: this.random_y()
     };
   }
