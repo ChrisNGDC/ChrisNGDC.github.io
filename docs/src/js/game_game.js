@@ -32,9 +32,7 @@ export default class Game {
     }
 
     draw(ctx) {
-        this.player.draw(ctx);
-        this.enemy.draw(ctx);
-        this.bullet.draw(ctx);
+        this.game_objects.forEach(object => object.draw(ctx));
     }
 
     create_enemies() {
