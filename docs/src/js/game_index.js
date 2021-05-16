@@ -11,7 +11,7 @@ window.onload = window.onresize = function() {
 
 let game = new Game(800, 600);
 game.start();
-
+gyftcfycyutvc
 let last_time = 0;
 
 function game_loop(time_stamp) {
