@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Pangolin&display=swap');
+
+body
+{
+    background: #000000;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 95vh;
+    align-items: center;
+    justify-items: center;
+}
+
+.calculator
+{
+    width: auto;
+    min-height: 700px;
+    border: solid 4px #ffffff;
+    border-radius: 10px;
+    display: grid;
+    margin: auto;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(4, 25%);
+}
+
+.text
+{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    grid-column: 1/5;
+    grid-row: 1/2;
+    background: black;
+    color: #c8d416;
+    border-radius: 7px 7px 0 0;
+    font-family: 'Pangolin', cursive;
+    font-size: 4.5em;
+    align-items: center;
+    margin: auto;
+}
+
+.text input{
+    width: 97%;
+    height: 100%;
+}
+
+.numbers
+{
+    grid-row: 2/5;
+    grid-column: 1/4;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.operators
+{
+    grid-column: 4/5;
+    grid-row: 2/5;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn, .op-btn
+{
+    background: #ffffffc7;
+    color: black;
+    font-size: 5em;
+    font-family: 'Pangolin', cursive;
+    flex-basis: 33.333333333%;
+    line-height: 100%;
+}
+
+.parentesis {
+    grid-column: 4/5;
+    grid-row: 4/5;
+    display: flex;
+    flex-direction: row;
+    max-height: 16.66666666%;
+}
+
+.op-btn {
+    max-height: 16.66666666%;
+}
+
+.btn-0
+{
+    border-bottom-left-radius: 10px;
+}
+
+.btn-equal {
+    border-bottom-right-radius: 10px;
+}
+
+#btn-OP, #btn-CP {
+    margin: auto;
+    flex-basis: 50%;
+    max-height: 100%;
+}
+
+.op-btn{
+    flex-basis: 25%;
+}
+
+#btn-cls{
+    flex: 1;
+}
+
+#text {
+    width: 100%;
+    text-align: center;
+}
+
+#text-res {
+    text-align: center;
+    width: 100%;
+}

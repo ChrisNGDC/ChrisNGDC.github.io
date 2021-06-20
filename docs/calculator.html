@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" type="text/css" href="./src/css/calculator.css" />
+        <meta charset="utf-8" />
+        <title>Calculator</title>
+    </head>
+    <body>
+        <div class="calculator">
+            <div class="text">
+                <span id="text"></span>
+                <span id="text-res"></span>
+            </div>
+            <div class="numbers">
+                <input type="button" value="1" class="btn" id="btn-1"/>
+                <input type="button" value="2" class="btn" id="btn-2"/>
+                <input type="button" value="3" class="btn" id="btn-3"/>
+                <input type="button" value="4" class="btn" id="btn-4"/>
+                <input type="button" value="5" class="btn" id="btn-5"/>
+                <input type="button" value="6" class="btn" id="btn-6"/>
+                <input type="button" value="7" class="btn" id="btn-7"/>
+                <input type="button" value="8" class="btn " id="btn-8"/>
+                <input type="button" value="9" class="btn" id="btn-9"/>
+                <input type="button" value="0" class="btn-0 btn" id="btn-0"/>
+                <input type="button" value="C" class="btn" id="btn-cls" />
+            </div>
+            <div class="operators">
+                <input type="button" value="+"  id="btn-+" class="op-btn"/>
+                <input type="button" value="-" id="btn--" class="op-btn"/>
+                <input type="button" value="*" id="btn-x" class="op-btn"/>
+                <input type="button" value="/" id="btn-/" class="op-btn"/>
+                <div class="parentesis">
+                    <input type="button" value="(" id="btn-OP" class="btn-OP op-btn"/>
+                    <input type="button" value=")" id="btn-CP" class="btn-CP op-btn"/>
+                </div>
+                <input type="button" value="=" id="btn-=" class="btn-equal op-btn"/>
+            </div>
+        </div>
+        <script src="./src/js/calculator.js"></script>
+    </body>
+</html>
