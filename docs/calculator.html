@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" type="text/css" href="./src/css/calculator.css" />
-        <meta charset="utf-8" />
         <title>Calculator</title>
+    
+        <link href="./src/css/calculator.css" type="text/css" rel="stylesheet">
+        <link rel="icon" href="./resources/images/icono-pagina.png">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=0.90, shrink-to-fit=no">
+        <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     </head>
     <body>
         <div class="calculator">
@@ -29,11 +34,9 @@
                 <input type="button" value="-" id="btn--" class="op-btn"/>
                 <input type="button" value="*" id="btn-x" class="op-btn"/>
                 <input type="button" value="/" id="btn-/" class="op-btn"/>
-                <div class="parentesis">
-                    <input type="button" value="(" id="btn-OP" class="btn-OP op-btn"/>
-                    <input type="button" value=")" id="btn-CP" class="btn-CP op-btn"/>
-                </div>
-                <input type="button" value="=" id="btn-=" class="btn-equal op-btn"/>
+                <input type="button" value="(" id="btn-OP" class="op-btn"/>
+                <input type="button" value=")" id="btn-CP" class="op-btn"/>
+                <input type="button" value="=" id="btn-equal" class="op-btn"/>
             </div>
         </div>
         <script src="./src/js/calculator.js"></script>

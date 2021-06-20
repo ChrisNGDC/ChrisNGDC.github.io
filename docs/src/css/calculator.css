@@ -5,7 +5,7 @@ body
     background: #000000;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 95vh;
+    grid-template-rows: 98vh;
     align-items: center;
     justify-items: center;
 }
@@ -13,11 +13,11 @@ body
 .calculator
 {
     width: auto;
-    min-height: 700px;
-    border: solid 4px #ffffff;
+    min-height: 100%;
+    border: solid 4px #c8d416;
     border-radius: 10px;
     display: grid;
-    margin: auto;
+    margin: 0;
     grid-template-columns: repeat(4, 25%);
     grid-template-rows: repeat(4, 25%);
 }
@@ -57,29 +57,32 @@ body
     grid-column: 4/5;
     grid-row: 2/5;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-.btn, .op-btn
-{
-    background: #ffffffc7;
+.btn, .op-btn {
+    background: #ffffff;
     color: black;
     font-size: 5em;
     font-family: 'Pangolin', cursive;
-    flex-basis: 33.333333333%;
+    flex-basis: 33.3333333333%;
     line-height: 100%;
 }
 
-.parentesis {
-    grid-column: 4/5;
-    grid-row: 4/5;
-    display: flex;
-    flex-direction: row;
-    max-height: 16.66666666%;
+.btn:hover, .op-btn:hover {
+    background: #c8d416
+}
+
+.btn:active, .op-btn:active {
+  background: black;
+  color: #c8d416;
 }
 
 .op-btn {
-    max-height: 16.66666666%;
+    background: #ffffff9f;
+    flex-basis: 50%;
+    max-width: 50%;
 }
 
 .btn-0
@@ -91,18 +94,12 @@ body
     border-bottom-right-radius: 10px;
 }
 
-#btn-OP, #btn-CP {
-    margin: auto;
-    flex-basis: 50%;
-    max-height: 100%;
-}
-
-.op-btn{
-    flex-basis: 25%;
-}
-
-#btn-cls{
+#btn-cls, #btn-equal{
     flex: 1;
+}
+
+#btn-equal {
+    max-width: 100%;
 }
 
 #text {
@@ -113,4 +110,14 @@ body
 #text-res {
     text-align: center;
     width: 100%;
+}
+
+@media screen and (max-device-height: 850px) {
+    .btn:hover, .op-btn:hover {
+        background: #ffffff;
+    }
+    .btn:active, .op-btn:active {
+        background: black;
+        color: #c8d416;
+    }
 }
