@@ -76,6 +76,7 @@ function inputNumber(event)
 function clear_screen() {
     output = "";
     input.innerText = 0;
+    output_res.innerText = '';
 }
 
 var operadores = ['+', '-', '*', '/', '(', ')']
