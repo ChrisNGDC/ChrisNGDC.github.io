@@ -1,8 +1,6 @@
 var input = document.getElementById("text");
 var output = "";
 var output_res = document.getElementById("text-res");
-var num1,num2;
-var res;
 let click = false
 
 /* operation */
