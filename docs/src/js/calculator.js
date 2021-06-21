@@ -1,5 +1,7 @@
 var input = document.getElementById("text");
 var output = "";
+const pi = 3.141592654;
+const e = 2.718281828;
 var output_res = document.getElementById("text-res");
 let click = false
 
@@ -19,13 +21,16 @@ var botons =
     boton7 = document.getElementById("btn-7"),
     boton8 = document.getElementById("btn-8"),
     boton9 = document.getElementById("btn-9"),
-    boton0 = document.getElementById("btn-0")
+    boton0 = document.getElementById("btn-0"),
+    botonP = document.getElementById("btn-punt"),
+    botonPi = document.getElementById("btn-pi"),
+    botonE = document.getElementById("btn-e")
     ],
 
     prepareButtons()
     {
         let i;
-        for(i = 0; i < 10; i++)
+        for(i = 0; i < this.option.length; i++)
             botons.option[i] = document.addEventListener("click", inputNumber)
     }
 }
@@ -45,12 +50,13 @@ var operators =
     prepareOperators()
     {
         let i;
-        for(i = 0; i < 5; i++)
+        for(i = 0; i < this.option.length; i++)
             operators.option[i] = document.addEventListener("click", operator)
     }
 }
 
-var clsBtn = document.getElementById("btn-cls")
+var clsBtn = document.getElementById("btn-cls");
+var delBtn = document.getElementById("btn-del");
 
 botons.prepareButtons();
 operators.prepareOperators();
@@ -64,7 +70,12 @@ function inputNumber(event)
        clear_screen();
        equal = false;
    }
-   if(parseInt(event.target.defaultValue) >= 0 || parseInt(event.target.defaultValue) <= 9)
+   if(event.target.defaultValue == 'π' || event.target.defaultValue == 'e' || event.target.defaultValue == '.')
+    {
+        output += event.target.defaultValue;
+        input.innerText = output;
+    }
+    if(parseInt(event.target.defaultValue) >= 0 || parseInt(event.target.defaultValue) <= 9)
     {
         output += parseInt(event.target.defaultValue);
         input.innerText = output;
@@ -77,7 +88,8 @@ function clear_screen() {
     output_res.innerText = '';
 }
 
-var operadores = ['+', '-', '*', '/', '(', ')']
+var operadores = ['+', '-', '*', '/', '(', ')'];
+var especiales = ['e', 'π']
 
 function operator(event)
 {
@@ -95,6 +107,18 @@ function operator(event)
     else if(event.target.defaultValue == "C")
     {
         clear_screen();
+    }
+    else if(event.target.defaultValue == "D")
+    {
+        if(output.length == 1)
+        {
+            input.innerText = 0;
+            output = 0;
+        } else
+        {
+            output = output.slice(0, output.length - 1);
+            input.innerText = output;
+        }
     }
 }
 
@@ -122,6 +146,11 @@ function operar(numero1, numero2, operacion)
     return res;
 }
 
+function esNumero(caracter)
+{
+    return !operadores.includes(caracter) && !especiales.includes(caracter)
+}
+
 function calculate(ecuacion)
 {
     var numero = "0";
@@ -130,12 +159,25 @@ function calculate(ecuacion)
     var long = ecuacion.length;
     if(i < long)
     {
-        while(i < long && !operadores.includes(ecuacion[i]))
+        while(i < long && esNumero(ecuacion[i]))
         {
             numero += ecuacion[i];
             i++;
         }
-        if(i < long)
+        if(i < long && especiales.includes(ecuacion[i]))
+        {
+            switch(ecuacion[i])
+            {
+                case 'e':
+                    numero = e;
+                    break;
+                case 'π':
+                    numero = pi;
+                    break;
+            }
+            i++;
+        }
+        if(i < long && operadores.includes(ecuacion[i]))
         {
             op = ecuacion[i];
             if(op == '(')

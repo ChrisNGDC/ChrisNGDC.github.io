@@ -5,7 +5,7 @@ body
     background: #000000;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 98vh;
+    grid-template-rows: 97vh;
     align-items: center;
     justify-items: center;
 }
@@ -67,7 +67,9 @@ body
     font-size: 5em;
     font-family: 'Pangolin', cursive;
     flex-basis: 33.3333333333%;
+    max-width: 33.3333333333%;
     line-height: 100%;
+    text-align: center;
 }
 
 .btn:hover, .op-btn:hover {
@@ -85,12 +87,11 @@ body
     max-width: 50%;
 }
 
-.btn-0
-{
+.btn-0 {
     border-bottom-left-radius: 10px;
 }
 
-.btn-equal {
+#btn-equal {
     border-bottom-right-radius: 10px;
 }
 
@@ -98,8 +99,14 @@ body
     flex: 1;
 }
 
+#btn-e, #btn-pi {
+    flex-basis: 16.6666666666%;
+    max-width: 16.6666666666%;
+}
+
 #btn-equal {
     max-width: 100%;
+    flex: 1;
 }
 
 #text {
@@ -119,5 +126,42 @@ body
     .btn:active, .op-btn:active {
         background: black;
         color: #c8d416;
+    }
+    .btn, .op-btn {
+        background: #ffffff;
+        color: black;
+        font-size: 2em;
+        font-family: 'Pangolin', cursive;
+        flex-basis: 33.3333333333%;
+        max-width: 33.3333333333%;
+        line-height: 100%;
+        text-align: center;
+    }
+    .op-btn {
+        background: #ffffff9f;
+        flex-basis: 50%;
+        max-width: 50%;
+    }
+    
+    .btn-0 {
+        border-bottom-left-radius: 10px;
+    }
+    
+    #btn-equal {
+        border-bottom-right-radius: 10px;
+    }
+    
+    #btn-cls, #btn-equal{
+        flex: 1;
+    }
+    
+    #btn-e, #btn-pi {
+        flex-basis: 16.6666666666%;
+        max-width: 16.6666666666%;
+    }
+    
+    #btn-equal {
+        max-width: 100%;
+        flex: 1;
     }
 }
