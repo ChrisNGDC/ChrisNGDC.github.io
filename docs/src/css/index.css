@@ -91,7 +91,16 @@ header .logo {
   text-align: center;
   justify-content: center;
   align-items: center;
-  
+}
+
+.proyects {
+  position: relative;
+  z-index: 10;
+  min-height: fit-content;
+  display: inline-block;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .text h2 {
@@ -131,6 +140,10 @@ header .logo {
   background-image: url('../../resources/images/cubos-azules.jpg');
 }
 
+.amarillo {
+  background-image: url('../../resources/images/cubos-amarillos.jpg');
+}
+
 @keyframes gradiant {
     0% { 
         background-position: 0% 100%; 
@@ -155,8 +168,16 @@ header .logo {
   color: hsl(0, 0%, 100%);
 }
 
-.menu ul li a:hover {
+.verde ul li a:hover {
   color: hsl(133, 60%, 52%);
+}
+
+.azul ul li a:hover {
+  color: hsl(236, 60%, 52%);
+}
+
+.amarillo ul li a:hover {
+  color: hsl(64, 60%, 52%);
 }
 
 .social-media {

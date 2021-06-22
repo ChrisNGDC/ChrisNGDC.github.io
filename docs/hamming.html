@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Hamming</title>
+    
+        <link href="./src/css/hamming.css" type="text/css" rel="stylesheet">
+        <link rel="icon" href="./resources/images/icono-pagina.png">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=0.90, shrink-to-fit=no">
+    </head>
+    <body>
+        <div class="hamming">
+            <div class="text">
+                <span id="msj"></span>
+            </div>
+            <div class="numbers">
+                <input type="button" value="1" class="btn" id="btn-1"/>
+                <input type="button" value="0" class="btn" id="btn-0"/>
+            </div>
+            <div class="operations">
+                <input type="button" value="D" id="btn-del" class="op-btn" />
+                <input type="button" value="C" id="btn-cls" class="op-btn" />
+                <input type="button" value="Codificar" class="btn" id="btn-c"/>
+                <input type="button" value="De-Codificar" class="btn" id="btn-dc"/>
+            </div>
+            <div class="text">
+                <span class="res1" id="codificado"></span>
+
+                <span class="res2" id="error"></span>
+                <span class="res2" id="bit"></span>
+                <span class="res2" id="codificado-og"></span>
+                <span class="res2" id="decodificado-og"></span>
+            </div>
+        </div>
+        <script src="./src/js/hamming.js"></script>
+    </body>
+</html>
