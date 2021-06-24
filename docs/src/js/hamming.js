@@ -224,7 +224,15 @@ function cambiarDigito(codigo, bit_error, opciones)
 
 function codificadoCorrecto(codigo, bit_error)
 {
-    var res = cambiarDigito(codigo, bit_error - 1, ['0', '1']);
+    var res;
+    if(bit_error == 0)
+    {
+        res = codigo;
+    }
+    else 
+    {
+        res = cambiarDigito(codigo, bit_error - 1, ['0', '1']);
+    }
     return res;
 }
 
