@@ -6,7 +6,8 @@ var output_bit = document.getElementById("bit");
 var output_cod_og = document.getElementById("codificado-og");
 var output_dcod_og = document.getElementById("decodificado-og");
 var final = false;
-let click = false
+var esperandoParidad = '5';
+let click = false;
 
 
 var botons =
@@ -46,6 +47,9 @@ botons.prepareButtons();
 operators.prepareOperators();
 input.innerText = 0;
 
+function reverseString(string) {
+    return string.split("").reverse().join("");
+}
 
 function inputNumber(event)
 {
@@ -75,15 +79,15 @@ function operator(event)
 {
     if(event.target.defaultValue == "Codificar")
     {
-        output_cod.innerText = codificar(output);
+        output_cod.innerText = codificar(crearEspacioParaCodificar(output));
         final= true;
     }
     else if(event.target.defaultValue == "De-Codificar")
     {
         output_bit.innerText = errorEnBit(output);
-        output_error.innerText = (output_bit > 0) ? "Yes": "No";
-        output_cod_og.innerText = codificadoCorrecto(output, output_bit);
-        output_dcod_og.innerText = deCodificadoCorrecto(output_cod_og);
+        output_error.innerText = (parseInt(output_bit.innerText) > 0) ? "Yes": "No";
+        output_cod_og.innerText = codificadoCorrecto(output, parseInt(output_bit.innerText));
+        output_dcod_og.innerText = deCodificadoCorrecto(output_cod_og.innerText);
         final= true;
     }
     else if(event.target.defaultValue == "C")
@@ -106,7 +110,7 @@ function operator(event)
 
 var pos_p = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
 
-function codificar(output)
+function crearEspacioParaCodificar(output)
 {
     var cant_p = 0;
     var res = "";
@@ -120,7 +124,7 @@ function codificar(output)
     {
         if(pos_p.includes(pos))
         {
-            res += '5';
+            res += esperandoParidad;
             pos++;
         }
         else
@@ -130,35 +134,39 @@ function codificar(output)
             pos++;
         }
     }
-    return codificarP(res);
+    return res;
 }
 
-function codificarP(codigo)
+function calcularParidad(codigo, inicio)
 {
-    var valor;
+    valor = 0;
+    let k = inicio;
+    while(k < codigo.length)
+    {
+        let z = k;
+        let j = inicio + 1;
+        while(j > 0 && z < codigo.length)
+        {
+            if(codigo[z] == '1' || codigo[z] == '0')
+            {
+                valor += parseInt(codigo[z]);
+            }
+            j--;
+            z++;
+        }
+        k += 2 * (inicio + 1);
+    }
+    return valor % 2;
+}
+
+function codificar(codigo)
+{
     var res = "";
     for (let i = 0; i < codigo.length; i++) 
     {
-        if(codigo[i] == 5)
+        if(codigo[i] == esperandoParidad)
         {
-            valor = -5;
-            let k = i;
-            while(k < codigo.length)
-            {
-                let z = k;
-                let j = i + 1;
-                while(j > 0 && z < codigo.length)
-                {
-                    console.log(codigo[z]);
-                    valor += parseInt(codigo[z]);
-                    console.log(valor);
-                    j--;
-                    z++;
-                }
-                k += 2 * (i + 1);
-            }
-            console.log(valor);
-            res += valor % 2;
+            res += calcularParidad(codigo, i);
         }
         else
         {
@@ -168,17 +176,69 @@ function codificarP(codigo)
     return res;
 }
 
-function errorEnBit(output)
+function binarioADecimal(binario)
 {
-
+    var res = 0;
+    for (let i = 0; i < binario.length; i++) {
+        res += binario[i] * (2 ** i);
+    }
+    return res;
 }
 
-function codificadoCorrecto(output, output_bit)
+function errorEnBit(codigo)
 {
-
+    var res = "";
+    var i = 0;
+    var k = 0;
+    while(i < codigo.length)
+    {
+        res += calcularParidad(codigo, i);
+        i += (2 ** k);
+        k++;
+    }
+    return binarioADecimal(res);
 }
 
-function deCodificadoCorrecto(output_cod_og)
+function cambiar(caracter, opciones)
 {
+    var res;
+    switch(caracter)
+    {
+        case opciones[0]:
+            res = opciones[1];
+            break;
+        case opciones[1]:
+            res = opciones[0];
+            break;
+        default:
+            break;
+    }
+    return res;
+}
 
+function cambiarDigito(codigo, bit_error, opciones)
+{
+    var replace = cambiar(codigo[bit_error], opciones);
+    return codigo.slice(0, bit_error) + replace + codigo.slice(bit_error + 1)
+}
+
+function codificadoCorrecto(codigo, bit_error)
+{
+    var res = cambiarDigito(codigo, bit_error - 1, ['0', '1']);
+    return res;
+}
+
+function deCodificadoCorrecto(codigo)
+{
+    var res = "";
+    var i = 0;
+    while(i < codigo.length)
+    {
+        if(!pos_p.includes(i + 1))
+        {
+            res += codigo[i];
+        }
+        i++
+    }
+    return res;
 }
