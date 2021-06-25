@@ -1,0 +1,17 @@
+body {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+}
+
+.center-text {
+    color: black;
+}
+
+.center {
+    color: black;
+}
+
+.contact-form {
+    color: black;
+}
