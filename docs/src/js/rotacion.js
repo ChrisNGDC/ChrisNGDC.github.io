@@ -53,7 +53,7 @@ input.innerText = 0;
 
 function inputNumber(event)
 {
-   if(final)
+   if(final && (parseInt(event.target.defaultValue) >= 0 || parseInt(event.target.defaultValue) <= 1))
    {
        clear_screen();
        final = false;
