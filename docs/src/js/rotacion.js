@@ -180,8 +180,7 @@ function rcr(numero){
 function shr(numero)
 {
     var res = "";
-    let i = 1;
-    res += ultimo(numero);
+    let i = 0;
     res += "0";
     while (i < numero.length - 1)
     {
