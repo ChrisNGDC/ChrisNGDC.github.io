@@ -83,16 +83,16 @@ function operator(event)
 {
     if(event.target.defaultValue == "Rotaciones")
     {
-        output_shr.innerText = shr(output);
-        output_shl.innerText = shl(output);
-        output_sal.innerText = shl(output);
-        output_sar.innerText = sar(output);
+        output_shr.innerText = "SHR: " + shr(output);
+        output_shl.innerText = "SHL: " + shl(output);
+        output_sal.innerText = "SAL: " + shl(output);
+        output_sar.innerText = "SAR: " + sar(output);
         
 
-        output_ror.innerText = ror(output);
-        output_rol.innerText = rol(output);
-        output_rcr.innerText = rcr(output);
-        output_rcl.innerText = rcl(output);
+        output_ror.innerText = "ROR: " + ror(output);
+        output_rol.innerText = "ROL: " + rol(output);
+        output_rcr.innerText = "RCR: " + rcr(output);
+        output_rcl.innerText = "RCL: " + rcl(output);
         final= true;
     }
     else if(event.target.defaultValue == "C")
