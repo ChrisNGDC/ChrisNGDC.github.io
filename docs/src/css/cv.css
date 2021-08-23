@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.hoja {
+    height: 29.7cm;
+    width: 21cm;
+    display: grid;
+    grid-template-columns: repeat(3, 33.3333333333333%);
+    grid-template-rows: repeat(4, 25%);
+}
+
+.data {
+    grid-column: 1 / 1;
+    grid-row: 2 / 5;
+    background-color: #a8a8a8;
+}
+
+.rest {
+    grid-column: 2 / 4;
+    grid-row: 2 / 5;
+    background-color: #e97a00;
+}
+
+.title {
+    grid-column: 1 / 6;
+    grid-row: 1 / 1;
+    display: flex;
+    justify-content: space-around;
+    font: normal 'Poppins', sans-serif;
+    background-image: url('../../resources/images/banner-cv.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #FFFFFF;
+}
+
+.me {
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.title img {
+    border-radius: 50%;
+    max-height: 90%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.nombre {
+    font-size: 3em;
+    font-weight: 600;
+    text-shadow: 2px 2px #000000;
+}
+
+.descripcion {
+    font-size: 1.5em;
+}
+
+.data {
+    text-align: center;
+    color: #000000;
+}
+
+.contact, .skills, .aboutme {
+    width: 90%;
+    margin: auto;
+    padding: 0;
+}
+
+ul {
+    list-style: none;
+    margin: auto;
+    padding: 0;
+}
+
+.contact a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.skills li {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: auto;
+    padding-top: 3px;
+}
+
+.progressbar {
+    background-color: black;
+    border-radius: 10px;
+    padding: 1.5px;
+    width: 50%;
+}
+
+.progressbar span {
+    display: none;
+}
+  
+.progressbar div {
+    background-color: #e97a00;
+    width: 20%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 0;
+    margin-left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+}
