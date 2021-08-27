@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario Login</title>
+    <style>
+        * {
+            margin: 0;
+        }
+        html {
+            height: 100%;
+            width: 100%;
+        }
+        body {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+        form {
+            align-items: center;
+            display: grid;
+        }
+        form h2 {
+            text-align: center;
+        }
+        form div {
+            text-align: right;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
+        form div:last-child {
+            justify-content: center;
+        }
+    </style>
+    <body>
+        <form action="" method="POST" target="_blank" autocomplete="off">
+            <h2>Acceso al Sistema</h2>
+            <br>
+            <div>
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" name="dni" pattern="[0-9]{8}" placeholder="45712393" title="DNI de 8 caracteres numericos" required>
+            </div>
+            <br>
+            <div>
+                <label for="usuario">Usuario:</label>
+                <input type="text" id="usuario" name="usuario" pattern="[A-Za-z0-9]{6,15}" placeholder="Nicolas" title="Usuario de 6 a 15 caracteres alfanumericos" required>
+            </div>
+            <br>
+            <div>
+                <label for="clave">Clave:</label>
+                <input type="password" id="clave" name="clave" pattern="[A-Za-z0-9ñÑ]{8,}" placeholder="123clave" title="Clave de 8 o mas caracteres alfanumericos" required>
+            </div>
+            <br>
+            <div>
+                <button type="submit">Ingresar</button>
+            </div>
+        </form> 
+    </body>
+</html>

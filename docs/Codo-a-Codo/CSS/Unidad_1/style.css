@@ -1,0 +1,35 @@
+html {
+    background-image: url('./1136977.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #000000;
+    color: #FFFFFF;
+    font-size: 1.6vw;
+}
+
+body {
+    margin: auto;
+    text-align: center;
+    height: 100%;
+}
+
+body h1:first-child {
+    text-decoration: underline;
+}
+
+.character, .enemy {
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+.character {
+    float: left;
+    margin-left: 25%;
+    margin-top: 9%;
+}
+
+.enemy {
+    float: right;
+    margin-right: 10%;
+    margin-top: 1%;
+}
