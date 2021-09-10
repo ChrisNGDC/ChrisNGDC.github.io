@@ -3,32 +3,45 @@
 body {
     display: flex;
     justify-content: center;
+    margin: 0;
 }
 
 .hoja {
     height: 29.7cm;
     width: 21cm;
+    margin-top: 0;
+    border: 0.1mm #000000 solid;
     display: grid;
     grid-template-columns: repeat(3, 33.3333333333333%);
     grid-template-rows: repeat(4, 25%);
+    background-image: url('../../resources/images/fondo-2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-weight: 500;
+}
+
+.data, .rest {
+    text-align: center;
+    color: #000000;
+    border: 0.1mm #000000 solid;
+    font-size: 1.1em;
 }
 
 .data {
     grid-column: 1 / 1;
     grid-row: 2 / 5;
-    background-color: #a8a8a8;
 }
 
 .rest {
     grid-column: 2 / 4;
     grid-row: 2 / 5;
-    background-color: #e97a00;
 }
 
 .title {
     grid-column: 1 / 6;
     grid-row: 1 / 1;
     display: flex;
+    border: 0.1mm #000000 solid;
     justify-content: space-around;
     font: normal 'Poppins', sans-serif;
     background-image: url('../../resources/images/banner-cv.jpg');
@@ -49,26 +62,28 @@ body {
     max-height: 90%;
     margin-top: auto;
     margin-bottom: auto;
+    border: 0.1mm #000000 solid;
 }
 
 .nombre {
-    font-size: 3em;
-    font-weight: 600;
+    font-size: 4em;
+    font-weight: 650;
 }
 
 .descripcion {
-    font-size: 1.5em;
+    font-size: 2em;
 }
 
-.data {
-    text-align: center;
-    color: #000000;
-}
-
-.contact, .skills, .aboutme {
+.contact, .skills, .aboutme, .softSkills, .languages, .education, .courses, .skills-resume {
     width: 90%;
     margin: auto;
     padding: 0;
+    height: auto;
+}
+
+.data h2, .rest h2 {
+    text-decoration: underline;
+    font-weight: 600;
 }
 
 ul {
@@ -77,27 +92,44 @@ ul {
     padding: 0;
 }
 
-.contact a {
+a {
     text-decoration: none;
     color: #000000;
+}
+
+.skills-resume{
+    display: flex;
+    justify-content: center;
+}
+
+.skills-resume i {
+    margin: 1mm;
+    font-size: 4em;
+    transition: transform .2s;
+}
+
+.skills-resume i:hover {
+    transform: scale(1.2);
 }
 
 .skills li {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 70%;
     margin: auto;
-    padding-top: 3px;
+    padding-top: 4mm;
+    font-size: 1.7em;
 }
 
 .progressbar {
-    background-color: black;
+    background-color: #ffffff;
     border-radius: 10px;
     padding: 1.5px;
     width: 50%;
+    border: 0.1mm #000000 solid;
 }
 
-.progressbar span {
+.value {
     display: none;
 }
   
