@@ -6,7 +6,7 @@ body {
     margin: 0;
 }
 
-.hoja {
+#hoja {
     height: 29.7cm;
     width: 21cm;
     margin-top: 0;
@@ -14,25 +14,27 @@ body {
     display: grid;
     grid-template-columns: repeat(3, 33.3333333333333%);
     grid-template-rows: repeat(4, 25%);
-    background-image: url('../../resources/images/fondo-2.jpg');
+    background-color: #ffffff;
     background-repeat: no-repeat;
     background-size: cover;
+    font-family: 'Poppins';
     font-weight: 500;
 }
 
-.data, .rest {
+#data, #rest {
+    background-color: #ffffff;
     text-align: center;
     color: #000000;
     border: 0.1mm #000000 solid;
-    font-size: 1.1em;
+    font-size: 0.9em;
 }
 
-.data {
+#data {
     grid-column: 1 / 1;
     grid-row: 2 / 5;
 }
 
-.rest {
+#rest {
     grid-column: 2 / 4;
     grid-row: 2 / 5;
 }
@@ -44,7 +46,7 @@ body {
     border: 0.1mm #000000 solid;
     justify-content: space-around;
     font: normal 'Poppins', sans-serif;
-    background-image: url('../../resources/images/banner-cv.jpg');
+    background-color: #e97a00;
     background-repeat: no-repeat;
     background-size: cover;
     color: #FFFFFF;
@@ -66,12 +68,12 @@ body {
 }
 
 .nombre {
-    font-size: 4em;
+    font-size: 3.5em;
     font-weight: 650;
 }
 
 .descripcion {
-    font-size: 2em;
+    font-size: 1.75em;
 }
 
 .contact, .skills, .aboutme, .softSkills, .languages, .education, .courses, .skills-resume {
@@ -104,8 +106,9 @@ a {
 
 .skills-resume i {
     margin: 1mm;
-    font-size: 4em;
+    font-size: 3.5em;
     transition: transform .2s;
+    background-color: #ffffff;
 }
 
 .skills-resume i:hover {
@@ -118,7 +121,7 @@ a {
     width: 70%;
     margin: auto;
     padding-top: 4mm;
-    font-size: 1.7em;
+    font-size: 1em;
 }
 
 .progressbar {
