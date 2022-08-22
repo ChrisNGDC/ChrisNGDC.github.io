@@ -124,12 +124,22 @@ a {
     font-size: 1em;
 }
 
+@keyframes animate {
+    100%{
+      transform: scaleX(1);
+    }
+}
+
 .progressbar {
     background-color: #ffffff;
-    border-radius: 10px;
-    padding: 1.5px;
+    padding: 0;
     width: 50%;
-    border: 0.1mm #000000 solid;
+    border: 0.5mm #000000 solid;
+
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: 10px;
+    animation: animate 0.75s cubic-bezier(1,0,0.5,1) forwards;
 }
 
 .value {
@@ -140,9 +150,13 @@ a {
     background-color: #e97a00;
     width: 20%;
     height: 100%;
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 0;
     margin-left: 0;
     margin-top: auto;
     margin-bottom: auto;
+
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: animate 0.75s 0.75s cubic-bezier(1,0,0.5,1) forwards;
 }

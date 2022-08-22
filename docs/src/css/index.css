@@ -220,6 +220,7 @@ header .logo {
 .skills{
   display: grid;
   grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
   text-align: center;
   width: 100%;
   background: rgb(255, 255, 255);
@@ -277,33 +278,6 @@ header .logo {
   background: #6665ee;
   animation: animate 1s 1s cubic-bezier(1,0,0.5,1) forwards;
 }
-.P100{
-  width: 100%;
-}
-.P90{
-  width: 90%;
-}
-.P80{
-  width: 80%;
-}
-.P70{
-  width: 70%;
-}
-.P60{
-  width: 60%;
-}
-.P50{
-  width: 50%;
-}
-.P40{
-  width: 40%;
-}
-.P30{
-  width: 30%;
-}
-.P20{
-  width: 20%;
-}
-.P10{
-  width: 10%;
+.value {
+  display: none;
 }
