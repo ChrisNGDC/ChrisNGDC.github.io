@@ -193,7 +193,7 @@ h2 {
 }
 
 .skill-bars .bar{
-    margin: 20px 0;
+    margin: 1rem 0;
 }
 
 .skill-bars .bar:first-child{
@@ -201,7 +201,17 @@ h2 {
 }
 
 .skill-bars .bar .info{
-    margin-bottom: 5px;
+    margin: auto;
+    margin-bottom: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+    width: fit-content;
+}
+
+.skill-bars .bar .info:hover{
+    transform: scale(1.4);
 }
 
 .skill-bars .bar .info span{
