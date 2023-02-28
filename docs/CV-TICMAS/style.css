@@ -1,0 +1,353 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 5vmin;
+}
+
+html {
+    width: 100%;
+    min-height: 100vh;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0; 
+    background: transparent;
+}
+
+body {
+    max-width: 100%;
+    min-height: 100vh;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%!important;
+    align-items: center;
+}
+
+.fixed-top {
+    min-height: 10vmin;
+    --bs-gutter-x: 0;
+    width: 100%;
+    justify-content: center;
+}
+
+#main-navbar {
+    background-color: #000000;
+}
+
+.navbar, #banner {
+    padding: 0 4vw 0 4vw;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: 100%!important;
+    min-height: 10vmin;
+    color: white;
+    justify-content: center;
+}
+
+.navbar .nav-link {
+    transition: transform .2s;
+    padding: 0;
+    font-size: 0.5rem!important;
+    background-color: #000000;
+    border-radius: 12.5px;
+    border-color: #ffffff;
+    border: 0.05rem solid #ffffff;
+    margin: 0 0.25rem;
+}
+
+.navbar .nav-link:hover {
+    transform: scale(1.1);
+}
+
+.image {
+    width: auto;
+    height: 40vmin;
+    margin: auto;
+    border-radius: 50%;
+}
+
+#title, #navbar {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+    align-items: flex-end;
+    font-size: 0.7rem;
+}
+
+#title {
+    align-items: center;
+}
+
+#datos {
+    background-image: url('./images/banner.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    height: 100vmin;
+}
+
+.lead {
+    font-size: 0.45rem!important;
+    color: white;
+    font-weight: 400;
+}
+
+.jumbotext {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 85%;
+    height: auto;
+    margin: auto;
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: white;
+    font-weight: 500;
+    background-color: hsla(0, 0%, 0%, 0.481);
+}
+
+.trasparencia {
+    display: flex;
+    background-color: hsla(0, 0%, 0%, 0.448);
+}
+
+.about {
+    display: flex;
+    flex-direction: row;
+}
+
+.about-inner {
+    margin: auto 1rem auto 2rem;
+    text-align: left;
+    padding: 1rem 0;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: center;
+    text-align: left;
+    
+}
+
+.data p {
+        font-size: 0.40rem!important;
+        color: white;
+        font-weight: 350;
+        margin: auto auto auto 0;
+        padding: 0;
+}
+
+b {
+    font-size: 0.8rem;
+}
+
+#datos, #habilidades, #proyectos, #contacto, #footer {
+    width: 100%;
+}
+
+.abilities {
+    position: relative;
+    z-index: 10;
+    min-height: fit-content;
+    display: inline-block;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000;
+    padding: 2.20rem 0;
+}
+
+h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: hsl(0, 0%, 100%);
+    line-height: 2rem;
+    text-transform: uppercase;
+}
+
+.skills{
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+    margin: auto;
+    width: 85%;
+    background: rgb(255, 255, 255);
+    border-radius: 12.5px;
+}
+
+.skill-bars{
+    padding: 25px 30px;
+    width: 100%;
+    float: left;
+}
+
+.skill-bars .bar{
+    margin: 20px 0;
+}
+
+.skill-bars .bar:first-child{
+    margin-top: 0px;
+}
+
+.skill-bars .bar .info{
+    margin-bottom: 5px;
+}
+
+.skill-bars .bar .info span{
+    font-weight: 500;
+    font-size: 17px;
+    opacity: 0;
+    animation: showText 0.5s 1s linear forwards;
+}
+
+@keyframes showText {
+    100%{
+        opacity: 1;
+    }
+}
+
+.skill-bars .bar .progress-line{
+    height: 10px;
+    width: 100%;
+    background: #f0f0f0;
+    position: relative;
+    transform: scaleX(0);
+    transform-origin: left;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 1px rgb(0, 0, 0),
+                0 1px rgba(207, 207, 207, 0.8);
+    animation: animate 1s cubic-bezier(1,0,0.5,1) forwards;
+}
+
+@keyframes animate {
+    100%{
+        transform: scaleX(1);
+    }
+}
+
+.bar .progress-line span{
+    height: 100%;
+    left: 0%;
+    position: absolute;
+    border-radius: 10px;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: #6665ee;
+    animation: animate 1s 1s cubic-bezier(1,0,0.5,1) forwards;
+}
+
+.value {
+display: none;
+}
+
+#proyectos {
+    background-image: url("./images/fondo-espacio.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 2.75rem;
+    padding-bottom: 1rem;
+}
+
+#proyectos #calc {
+    width: 35%;
+    margin: auto 0.3rem;
+}
+
+#proyectos #ham {
+    width: 35%;
+    margin: auto 0.3rem;
+}
+
+#proyectos #rot {
+    width: 22.5%;
+    margin: auto 0.3rem;
+}
+
+#proyectos img {
+    width: 100%;
+    transition: transform .2s;
+}
+
+#proyectos img:hover {
+    transform: scale(1.05);
+}
+
+#contact-form {
+    margin: 1rem auto;
+}
+
+#contact-form .row {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    margin: auto;
+}
+
+#contact-form input, #contact-form textarea {
+    font-size: 0.5rem!important;
+
+}
+
+.row button {
+    width: 95%;
+}
+
+#footer {
+    background-color: #000000;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    max-height: 25vmin;
+}
+
+footer .nav {
+    justify-content: center;
+}
+
+footer .nav-link {
+    padding: 0;
+    margin: 0.25rem 0.5rem;
+}
+
+footer img {
+    width: 1.25rem;
+    transition: transform .2s;
+}
+
+footer img:hover {
+    transform: scale(1.5);
+}
+
+footer p {
+    margin: 0.5rem;
+}
+
+#footer-tm {
+    color: #ffffff;
+    font-size: 0.6rem!important;
+}
+
+#footer-tm b {
+    font-size: 0.6rem!important;
+}
