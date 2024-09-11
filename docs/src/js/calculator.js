@@ -110,10 +110,10 @@ function operator(event)
     }
     else if(event.target.defaultValue == "D")
     {
-        if(output.length == 1)
+        if(output.length <= 1)
         {
             input.innerText = 0;
-            output = 0;
+            output = "";
         } else
         {
             output = output.slice(0, output.length - 1);
