@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Parcial - Gestión de Sistemas</title>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-muted: #666666;
+            --primary: #4361ee;
+            --primary-hover: #3a53d0;
+            --correct-bg: #d4edda;
+            --correct-border: #28a745;
+            --correct-text: #155724;
+            --incorrect-bg: #f8d7da;
+            --incorrect-border: #dc3545;
+            --incorrect-text: #721c24;
+            --option-bg: #ffffff;
+            --option-border: #e0e0e0;
+            --option-hover: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .quiz-container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--bg-color);
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .stats span.corrects {
+            color: var(--correct-border);
+        }
+
+        .stats span.incorrects {
+            color: var(--incorrect-border);
+        }
+
+        .stats span.remaining {
+            color: var(--text-muted);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background-color: var(--option-bg);
+            border: 2px solid var(--option-border);
+            color: var(--text-main);
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: var(--option-hover);
+            border-color: #b0b0b0;
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+
+        .option-btn.correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-border);
+            color: var(--correct-text);
+            font-weight: 600;
+        }
+
+        .option-btn.incorrect {
+            background-color: var(--incorrect-bg);
+            border-color: var(--incorrect-border);
+            color: var(--incorrect-text);
+        }
+
+        .next-btn {
+            margin-top: 2rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: none;
+            /* Hidden until an answer is selected */
+        }
+
+        .next-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .finish-screen {
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="quiz-container" id="quiz-container">
+        <div class="header" id="header">
+            <h1>Simulador de Parciales</h1>
+            <div class="stats">
+                <span class="corrects">✅ Correctas: <span id="correct-count">0</span></span>
+                <span class="incorrects">❌ Incorrectas: <span id="incorrect-count">0</span></span>
+                <span class="remaining">Restantes: <span id="remaining-count">115</span></span>
+            </div>
+        </div>
+
+        <div id="question-screen">
+            <div class="question-text" id="question-text">Cargando pregunta...</div>
+            <div class="options-container" id="options-container"></div>
+            <button class="next-btn" id="next-btn" onclick="loadNextQuestion()">Siguiente Pregunta ➔</button>
+        </div>
+
+        <div class="finish-screen" id="finish-screen">
+            <h2>¡Simulacro Terminado! 🎉</h2>
+            <p>Respondiste todas las preguntas.</p>
+            <p style="font-size: 1.2rem; font-weight: bold;">Tu puntaje final:</p>
+            <p style="font-size: 2rem; color: #28a745;" id="final-score">0 / 115</p>
+            <button class="next-btn" style="display: block; margin-top: 20px;" onclick="location.reload()">Reiniciar
+                Simulador</button>
+        </div>
+    </div>
+
+    <script>
+        // Data: Todas las 115 preguntas extraídas y formateadas
+        const allQuestions = [
+            // --- 1° PARCIAL ---[cite: 2]
+            { q: "En el contexto de los sistemas de información, ¿cuál de las siguientes opciones representa mejor un dato?", opts: ["La conclusión de que el mercado de software es cada vez más competitivo", "La evaluación de que las plataformas cloud representan una amenaza", "El análisis que indica que la empresa tiene buena reputación entre sus clientes", "Un registro que indica que la empresa tiene 25 empleados"], ans: 3 },
+            { q: "¿Qué directivo es responsable de definir y gestionar la estrategia de tecnología de la información en la empresa?", opts: ["COO", "CFO", "CMO", "CIO"], ans: 3 },
+            { q: "¿Cuál de las siguientes situaciones representa principalmente un gasto CAPEX?", opts: ["Pago mensual de una suscripción a una plataforma cloud", "Pago del servicio de internet de la empresa", "Compra de servidores para instalar en el centro de datos de la empresa", "Pago de mantenimiento mensual del sistema"], ans: 2 },
+            { q: "¿Cuál de las siguientes situaciones representa principalmente un gasto OPEX?", opts: ["Construcción de un centro de datos propio", "Compra de licencias perpetuas de software", "Adquisición de nuevos equipos para el área de sistemas", "Pago mensual por uso de infraestructura cloud"], ans: 3 },
+            { q: "¿Cuál es uno de los principales objetivos del uso del prototipado en el desarrollo de sistemas de información?", opts: ["Sustituir completamente el proceso de desarrollo de sistemas", "Eliminar la necesidad de realizar pruebas del sistema", "Reducir la necesidad de participación de los usuarios", "Permitir que los usuarios participen en el diseño del sistema y definan mejor los requerimientos"], ans: 3 },
+            { q: "¿Cuál es uno de los principales riesgos del uso excesivo del prototipado?", opts: ["Que los usuarios no participen en el desarrollo", "Que el sistema no pueda ser presentado a los usuarios", "Que se omitan etapas importantes como pruebas, rediseño o documentación", "Que el sistema final tenga demasiada documentación"], ans: 2 },
+            { q: "Cuando los clientes comienzan a evaluar soluciones internacionales, esto refleja principalmente:", opts: ["Reducción de la rivalidad competitiva", "Disminución de la oferta del mercado", "Aumento del poder de negociación de los clientes", "Mayor dependencia de proveedores"], ans: 2 },
+            { q: "En el proceso de evaluación de desempeño que implementará SoftGestion, ¿qué se entiende por competencias?", opts: ["El conjunto de conocimientos, habilidades y actitudes que permiten desempeñar un trabajo", "Los resultados financieros de los proyectos", "Los recursos tecnológicos disponibles", "La cantidad de horas trabajadas por cada empleado"], ans: 0 },
+            { q: "La aparición de nuevas plataformas cloud que compiten directamente con los productos de SoftGestion representa principalmente:", opts: ["Barreras tecnológicas", "Rivalidad entre competidores", "Poder de negociación de clientes", "Poder de negociación de proveedores"], ans: 1 },
+            { q: "Si el nuevo sistema se implementa primero en un solo departamento o grupo reducido de usuarios para evaluar su funcionamiento, ¿qué estrategia se está utilizando?", opts: ["Conversión directa", "Conversión en fases", "Conversión paralela", "Conversión piloto"], ans: 3 },
+            { q: "En el caso de SoftGestion, la empresa evalúa desarrollar una nueva plataforma cloud. ¿Cuál de las siguientes tecnologías permitiría conectar los sistemas de gestión con plataformas de comercio electrónico externas?", opts: ["Tecnología de administración de datos", "Hardware", "Tecnología de redes y telecomunicaciones", "Software de aplicación"], ans: 2 },
+            { q: "¿Cuál es el objetivo principal del uso de un tablero Kanban en un equipo de desarrollo?", opts: ["Reemplazar completamente las metodologías ágiles", "Reducir el número de desarrolladores", "Eliminar la necesidad de planificación del proyecto", "Visualizar el flujo de trabajo y el estado de las tareas"], ans: 3 },
+            { q: "Cuando los desarrolladores prueban cada programa o módulo de forma individual, ¿qué tipo de prueba están realizando?", opts: ["Prueba de aceptación", "Prueba de unidad", "Prueba de integración", "Prueba de sistema"], ans: 1 },
+            { q: "El crecimiento del comercio electrónico podría representar:", opts: ["Una oportunidad", "Una debilidad", "Un aumento del poder de los proveedores", "Una reducción de la competencia"], ans: 0 },
+            { q: "Según el análisis FODA, ¿cuál es una fortaleza de la empresa?", opts: ["Aparición de plataformas cloud económicas", "Calidad del soporte técnico brindado a los clientes", "Dependencia de algunos programadores clave", "Uso de tecnologías antiguas"], ans: 1 },
+            { q: "¿En qué situación suele ser más útil el prototipado?", opts: ["Cuando todos los requerimientos del sistema están claramente definidos", "Cuando el sistema ya está completamente desarrollado", "Cuando el sistema no tendrá interacción con usuarios", "Cuando existe incertidumbre sobre los requerimientos o el diseño del sistema"], ans: 3 },
+            { q: "En el caso de la empresa SoftGestion, migrar a una plataforma cloud con pago mensual probablemente implicaría:", opts: ["Eliminar completamente los costos operativos", "Reducir la inversión inicial y aumentar el OPEX", "Aumentar los gastos CAPEX de la empresa", "Transformar todos los costos en inversión de capital"], ans: 1 },
+            { q: "Cuando los usuarios participan para validar que el sistema cumple con los requisitos del negocio antes de su implementación, ¿qué tipo de prueba se está realizando?", opts: ["Prueba de rendimiento", "Prueba de aceptación", "Prueba de sistema", "Prueba de unidad"], ans: 1 },
+            { q: "¿Cuál es una característica principal de las metodologías ágiles de desarrollo de software?", opts: ["Dividir el desarrollo en ciclos cortos con entregas frecuentes de funcionalidad", "Evitar la participación de los usuarios durante el desarrollo", "Realizar una única entrega del sistema al final del proyecto", "Definir todos los requerimientos del sistema al inicio y no modificarlos"], ans: 0 },
+            { q: "En metodologías ágiles como Scrum, los ciclos cortos de trabajo donde se desarrolla y entrega funcionalidad se denominan:", opts: ["Fases de implementación", "Iteraciones o sprints", "Pruebas de aceptación", "Conversiones"], ans: 1 },
+            { q: "¿Cuál es el principal objetivo del feedback dentro de una evaluación de desempeño?", opts: ["Determinar el salario del empleado", "Criticar los errores del trabajador", "Proporcionar información que ayude a mejorar el desempeño", "Controlar el horario de trabajo"], ans: 2 },
+            { q: "En el contexto del caso, ¿cuál de los siguientes ejemplos corresponde a la evaluación de resultados?", opts: ["Capacidad de comunicación con clientes", "Trabajo en equipo del desarrollador", "Habilidad de liderazgo del jefe de equipo", "Cumplimiento de plazos de entrega de los proyectos"], ans: 3 },
+            { q: "¿Cuál de las siguientes opciones representa un ejemplo de información para la toma de decisiones?", opts: ["El análisis indica que los clientes están migrando hacia soluciones cloud", "La empresa tiene 25 empleados", "Tres clientes cancelaron su contrato este mes", "El sistema registró 120 tickets de soporte"], ans: 0 },
+            { q: "Según el análisis FODA, ¿cuál es una oportunidad identificable en el caso?", opts: ["Aparición de competidores internacionales", "Tecnologías antiguas en los sistemas actuales", "Crecimiento del comercio electrónico", "Dependencia de programadores clave"], ans: 2 },
+            { q: "¿Cuál de las siguientes situaciones representa una amenaza para la empresa?", opts: ["Crecimiento de ventas online", "Dependencia de algunos programadores clave", "Buena relación con clientes actuales", "Aparición de plataformas cloud de bajo costo"], ans: 3 },
+            { q: "¿Qué directivo es responsable de garantizar la seguridad de la información y la protección de los datos?", opts: ["CISO", "CTO", "CEO", "CIO"], ans: 0 },
+            { q: "En el modelo de Porter, las soluciones internacionales que los clientes evalúan pueden considerarse principalmente:", opts: ["Productos sustitutos", "Proveedores estratégicos", "Recursos internos", "Regulaciones del mercado"], ans: 0 },
+            { q: "La decisión de invertir en una plataforma cloud busca principalmente:", opts: ["Disminuir la cantidad de clientes", "Eliminar la competencia internacional", "Reducir el poder de los proveedores", "Adaptarse a cambios tecnológicos del mercado"], ans: 3 },
+            { q: "La dependencia de programadores clave representa principalmente:", opts: ["Una Fortaleza competitiva", "Una amenaza", "Una Debilidad", "Una oportunidad tecnológica"], ans: 2 },
+            { q: "¿Cuál es el objetivo principal del proceso de pruebas en el desarrollo de un sistema de información?", opts: ["Eliminar la necesidad de documentación del sistema", "Reducir la cantidad de desarrolladores en el proyecto", "Reducir el tiempo total de desarrollo del proyecto", "Determinar si el sistema produce los resultados correctos bajo condiciones conocidas"], ans: 3 },
+            { q: "¿Cuál de las siguientes áreas del sistema se suele desarrollar con mayor frecuencia mediante prototipos?", opts: ["La infraestructura de red", "El sistema operativo", "La interfaz del usuario final del sistema", "Los servidores físicos del sistema"], ans: 2 },
+            { q: "Cual es el modelo que es conocido como Informática sin servidor", opts: ["FaaS", "IaaS", "SaaS", "PaaS"], ans: 0 },
+            { q: "En el desarrollo de sistemas de información, ¿qué se entiende por conversión?", opts: ["El proceso de realizar pruebas de software", "El proceso de diseñar la arquitectura del sistema", "El proceso de programar los módulos del sistema", "El proceso de cambiar del sistema anterior al sistema nuevo"], ans: 3 },
+            { q: "En metodologías ágiles, ¿cuál es uno de los principales beneficios de trabajar en ciclos cortos de desarrollo?", opts: ["Permite eliminar la necesidad de documentación", "Facilita detectar errores y realizar cambios durante el proyecto", "Reduce completamente los costos del proyecto", "Evita realizar pruebas del sistema"], ans: 1 },
+            { q: "Cuando el equipo de tecnología evalúa el funcionamiento del sistema completo y la interacción entre sus componentes, ¿qué tipo de prueba se está realizando?", opts: ["Prueba de seguridad", "Prueba de aceptación", "Prueba de unidad", "Prueba de sistema"], ans: 3 },
+            { q: "Si el CIO define como objetivo “mejorar la calidad del software”, ¿qué característica debería agregarse para convertirlo en un objetivo SMART?", opts: ["Reducir la cantidad de reuniones del equipo", "Definir un indicador medible y un plazo para alcanzarlo", "Eliminar la evaluación de desempeño", "Asignar el objetivo solo a los gerentes"], ans: 1 },
+            { q: "Si el sistema nuevo y el sistema anterior se operan simultáneamente durante un período de tiempo para verificar su funcionamiento, ¿qué estrategia de conversión se está utilizando?", opts: ["Conversión directa", "Conversión en fases", "Conversión piloto", "Conversión paralela"], ans: 3 },
+            { q: "En el caso presentado, ¿qué directivo es responsable de definir la estrategia general del negocio?", opts: ["CISO", "CTO", "CEO", "CIO"], ans: 2 },
+            { q: "Según el análisis FODA, ¿cuál es una debilidad de la empresa?", opts: ["Crecimiento del comercio electrónico", "Dependencia de algunos programadores clave", "La reputación entre clientes", "Nuevas integraciones digitales en el mercado"], ans: 1 },
+            { q: "Si el sistema nuevo se implementa progresivamente activando módulos o funcionalidades en distintas etapas, ¿qué estrategia de conversión se está aplicando?", opts: ["Conversión piloto", "Conversión directa", "Conversión paralela", "Conversión en fases"], ans: 3 },
+
+            // --- 2° PARCIAL ---[cite: 2]
+            { q: "Si el sistema de IA recomienda a la empresa desviar camiones a una ruta alterna para evitar un retraso ya previsto, está realizando un análisis:", opts: ["Predictivo", "Diagnóstico", "Descriptivo", "Prescriptivo", "Estadístico"], ans: 3 },
+            { q: "TechLogistics nota que muchos clientes potenciales llegan a su web pero se van sin realizar ninguna acción. El indicador de este 'rechazo' inicial es:", opts: ["Indexación", "Tasa de abandono del carrito", "Tasa de conversión", "Tasa de rebote"], ans: 3 },
+            { q: "Al integrar su contabilidad, flota de camiones y nómina en una sola plataforma para tener una 'única fuente de verdad', TechLogistics usa un:", opts: ["BI", "CRM", "SCM", "ERP"], ans: 3 },
+            { q: "La empresa planea implementar controles que 'emitan alertas sobre intentos de uso de funcionalidades del sistema que no competen al usuario'. Según la clasificación de mecanismos, este es un:", opts: ["Control Preventivo de acceso", "Mecanismo disuasivo", "Control de Operaciones", "Mecanismo Detectivo", "Mecanismo Correctivo de flujo"], ans: 3 },
+            { q: "El departamento de logística busca optimizar el 'flujo de bienes, datos y finanzas' desde que se adquiere la madera hasta que el mueble llega al cliente. ¿Qué aplicación empresarial abarca este flujo integral?", opts: ["CRM", "SCM", "ERP", "BPM"], ans: 1 },
+            { q: "La empresa desea conocer el beneficio total que un cliente le dejará durante años para decidir si vale la pena invertir en él. Esta métrica es:", opts: ["CAC", "Tasa de conversión", "Lifetime Value (LTV)", "ROI"], ans: 2 },
+            { q: "La empresa alquila servicios virtuales de AWS para su base de datos y de Google Cloud para su motor de IA, evitando la dependencia de un solo proveedor. Esta estrategia se clasifica como:", opts: ["Multinube", "Nube Híbrida", "FaaS", "IaaS"], ans: 0 },
+            { q: "Si TechLogistics desea unificar la información de un nuevo contenedor desde su diseño hasta que es reciclado tras 10 años de uso, necesita:", opts: ["Gestión de proyectos", "Procurement", "PLM", "EAM", "Logística inversa"], ans: 2 },
+            { q: "TechLogistics consulta el Cuadrante Mágico y encuentra un proveedor con gran 'habilidad de ejecución' pero sin visión clara de futuro. Es un:", opts: ["Jugador de nicho", "Retador", "Visionario", "Líder"], ans: 1 },
+            { q: "La dirección de la empresa está evaluando 'qué pasos se darán y quiénes serán los responsables de liderar el proceso de cambio', además de analizar si las tecnologías son una amenaza o una oportunidad. ¿En qué fase de la Transformación Digital se encuentran?", opts: ["Transición cultural", "Identificación del mercado", "Análisis de viabilidad", "Ejecución y Medición"], ans: 2 },
+            { q: "La empresa ha detectado que una tecnología emergente tiene mucha publicidad, pero los proyectos piloto muestran resultados inconsistentes. Según Gartner, están en el:", opts: ["Abismo de desilusión", "Pico de expectativas", "Meseta de productividad", "Lanzamiento"], ans: 0 },
+            { q: "Un bot de la empresa ayuda a un operador humano a completar una tarea compleja, activándose solo cuando el humano lo pide. Esto es:", opts: ["Machine Learning", "RPA no asistida", "IA Generativa", "Robótica", "RPA asistida"], ans: 4 },
+            { q: "El dilema de TechLogistics sobre si la IA Generativa podría desplazar trabajadores o crear noticias falsas se enmarca en la dimensión moral de:", opts: ["Control", "Calidad de vida", "Acceso", "Propiedad"], ans: 1 },
+            { q: "Para segmentar a sus clientes en grupos con comportamientos similares sin tener categorías previas, TechLogistics debe usar:", opts: ["Regresión lineal", "Sistemas expertos", "Aprendizaje supervisado", "Aprendizaje no supervisado (Clustering)"], ans: 3 },
+            { q: "Para mejorar la capacitación de sus técnicos, la empresa utiliza una tecnología que 'fusiona imágenes virtuales con la vista real' para proporcionar información adicional sobre las piezas de un motor. Esto es:", opts: ["Realidad Virtual", "IA Integrada", "Realidad Aumentada", "VRML"], ans: 2 },
+            { q: "TechLogistics decide mantener sus 'servidores heredados en un entorno local' pero utiliza simultáneamente una nube pública para balancear el tráfico. Esta implementación se define como:", opts: ["Nube Pública", "Nube Híbrida", "Multinube", "Nube Privada"], ans: 1 },
+            { q: "Para medir la calidad de sus anuncios en Google basándose en el CTR, TechLogistics revisa el:", opts: ["ROI orgánico", "CPC", "QS (Quality Score)", "Posición media"], ans: 2 },
+            { q: "TechLogistics implementa un 'Gemelo Digital' que aprende por 'ensayo y error' a optimizar el movimiento de robots en el almacén. Esto es:", opts: ["IA Generativa", "Sistema basado en reglas", "Aprendizaje no supervisado", "Aprendizaje supervisado", "Aprendizaje por refuerzo"], ans: 4 },
+            { q: "La empresa entrena un algoritmo para detectar facturas falsas usando un histórico de facturas ya marcadas como 'válidas' o 'fraudulentas'. Esto es:", opts: ["Sistema basado en reglas", "Aprendizaje no supervisado", "Aprendizaje por refuerzo", "Aprendizaje supervisado", "IA Generativa"], ans: 3 },
+            { q: "NexoLog detectó que su software tiene una vulnerabilidad de 'desbordamiento de buffer'. Según las fuentes, esto es un error de:", opts: ["Implementación", "Código abierto", "Diseño", "Hardware"], ans: 0 },
+            { q: "Al analizar la efectividad de los enlaces incluidos en las publicaciones de redes sociales, TechLogistics debe calcular la proporción de clics obtenidos respecto al total de impresiones. ¿Qué indicador están midiendo?", opts: ["CPC", "Tasa de Conversión", "Engagement", "Alcance Total", "CTR"], ans: 4 },
+            { q: "TechLogistics busca implementa 'Gestión de Privilegios' y 'Cifrado de Información'. ¿Bajo qué pilar de la seguridad informática se agrupan estas medidas?", opts: ["Confidencialidad", "Integridad", "Autenticidad", "Trazabilidad", "Disponibilidad"], ans: 0 },
+            { q: "Si la gerencia establece que ningún empleado puede autorizar un pago y a la vez registrarlo en el sistema, aplica un control administrativo de:", opts: ["Segregación de funciones", "Supervisión", "Políticas por escrito", "Control de software"], ans: 0 },
+            { q: "La empresa quiere certificar el 'ciclo de vida' completo de su nuevo software de gestión portuaria. ¿Qué norma es la indicada para procesos de desarrollo, operación y mantenimiento?", opts: ["ISO/IEC 27001", "ISO/IEC 12207", "ISO/IEC 25000", "ISO/IEC 20000"], ans: 1 },
+            { q: "Si la empresa utiliza una IA para 'traducir' un flujo masivo de datos de sensores en una imagen visual del estado de la flota, está aplicando:", opts: ["Sistemas expertos", "Redes Neuronales", "IA Generativa", "RPA"], ans: 1 },
+            { q: "TechLogistics quiere que su sistema defina automáticamente los 'atributos y resultados' esperados basándose estrictamente en 'correlaciones de datos históricos' para prever la demanda. ¿Qué paso crítico del análisis predictivo se está ejecutando aquí?", opts: ["Definición del objetivo", "Optimización prescriptiva", "Determinación de la información base y creación del modelo", "Evaluación descriptiva"], ans: 2 },
+            { q: "El módulo que permite a las máquinas de la flota avisar que necesitan mantenimiento antes de romperse (mantenimiento predictivo) es:", opts: ["EAM", "CRM", "ERP-Finanzas", "SCM-Procurement"], ans: 0 },
+            { q: "TechLogistics busca un cambio 'radical' y 'dramático' en su facturación para mejorar el desempeño en cientos de puntos porcentuales. ¿Qué enfoque están siguiendo?", opts: ["TQM", "BPM", "BPR", "Six Sigma"], ans: 2 },
+            { q: "Un cambio no autorizado en la lógica de cálculo del sistema de fletes ha provocado que los valores de las facturas no coincidan con los registros originales. ¿Qué característica específica de la información se ha perdido al verse alterado su contenido?", opts: ["Sensitividad", "Disponibilidad", "Integridad", "Control de acceso", "No repudio"], ans: 2 },
+            { q: "Tras un incidente, el sistema de TechLogistics bloquea automáticamente las acciones sospechosas para mitigar el daño. Este es un control:", opts: ["De entrada", "Preventivo", "Correctivo", "De diseño"], ans: 2 },
+            { q: "TechLogistics desea capturar datos de vibración y temperatura de sus camiones en tiempo real. Para ello usa:", opts: ["Sistemas expertos", "IoT", "CRM", "SCM", "RPA"], ans: 1 },
+            { q: "Si un bloque en la cadena de TechLogistics es modificado, su 'firma digital' cambia inmediatamente, invalidando el resto. Esta firma se llama:", opts: ["Llave privada", "Hash", "Qbit", "Token"], ans: 1 },
+            { q: "Si la empresa ya está midiendo y evaluando qué tecnologías son más beneficiosas tras haber implementado el cambio, dentro de la transformación digital está en la fase de:", opts: ["Transición", "Análisis", "Optimización", "Ejecución"], ans: 3 },
+            { q: "Un sistema que rechaza automáticamente una solicitud de crédito de un cliente porque 'SI tiene deudas Y SI es cliente nuevo, ENTONCES rechazar' es un:", opts: ["Sistema Experto", "Machine Learning", "Análisis descriptivo", "Red Neural"], ans: 0 },
+            { q: "TechLogistics usa un software para automatizar el ingreso manual de datos de Excel al sistema contable, imitando el clic humano. Esto es:", opts: ["Inteligencia Artificial", "Big Data", "RPA", "Blockchain", "Robótica"], ans: 2 },
+            { q: "Si el área de operaciones prefiere analizar los procesos de forma total e individual para identificar 'cuellos de botella' y mejorar la eficiencia gradualmente, optan por:", opts: ["BPM", "BPR", "Outsourcing", "TQM"], ans: 0 },
+            { q: "Al elegir una arquitectura 'Serverless' para el despacho, donde solo pagan por el código que se ejecuta en respuesta a un pedido, usan:", opts: ["FaaS", "IaaS", "PaaS", "Multinube"], ans: 0 },
+            { q: "TechLogistics quiere que un grupo preseleccionado de empresas socias controle el proceso de validación en su red de Blockchain. Este tipo de red es:", opts: ["Privada", "Semiprivada", "Consorcio", "Pública"], ans: 2 },
+            { q: "Si TechLogistics gasta mucho dinero en publicidad para captar un cliente pero este solo hace una compra pequeña y no vuelve, tiene un problema de:", opts: ["SEO bajo", "ROI invertido", "Tasa de rebote de email", "CAC muy alto frente al LTV", "Falta de indexación"], ans: 3 },
+            { q: "La empresa utiliza un modelo donde el software de gestión se alquila y se accede vía web sin instalar nada localmente. Este modelo se denomina:", opts: ["On-premise", "SaaS", "PaaS", "IaaS"], ans: 1 },
+
+            // --- CASO DE ESTUDIO: NEXOGLOBAL S.A. ---[cite: 1]
+            { q: "NexoGlobal define su infraestructura como un conjunto de componentes interrelacionados para procesar y distribuir información. ¿Cuál es el objetivo primordial de un SI (Sistema de Información) desde la perspectiva de negocios?", opts: ["Ofrecer un valor económico real y una solución organizacional a retos del entorno.", "Maximizar únicamente la capacidad de almacenamiento de hardware.", "Eliminar la necesidad de personal administrativo.", "Sustituir la cultura organizacional por procesos automáticos."], ans: 0 },
+            { q: "¿A qué nivel de la organización NexoGlobal corresponde la responsabilidad de formular planes de acción y asignar recursos financieros para responder a retos del entorno?", opts: ["Gerencia de nivel superior.", "Gerencia operacional.", "Científicos de datos.", "Trabajadores de producción."], ans: 0 },
+            { q: "El sistema que NexoGlobal utiliza para atraer, desarrollar y mantener su fuerza laboral pertenece a la función de:", opts: ["Recursos humanos.", "Finanzas y contabilidad.", "Ventas y marketing.", "Gobierno de TI."], ans: 0 },
+            { q: "NexoGlobal está adoptando tecnologías de la 'Quinta Generación' (2000-actualidad). ¿Qué tecnologías son icónicas de este periodo según la fuente?", opts: ["Inteligencia Artificial (IA) e Internet de las Cosas (IoT).", "Sistemas centralizados de procesamiento de datos.", "Mainframes para gestión de inventarios exclusivamente.", "Arquitecturas cliente-servidor de primera etapa."], ans: 0 },
+            { q: "Un atacante alteró el contenido de un registro de flete en tránsito. ¿Qué pilar de seguridad permite asegurar que el contenido permanezca inalterado salvo por personal autorizado?", opts: ["Integridad.", "Disponibilidad.", "Confidencialidad.", "Autenticidad."], ans: 0 },
+            { q: "NexoGlobal implementó el bloqueo de direcciones IP tras detectar una brecha. ¿Cómo se clasifica este control que ayuda a mitigar los efectos de un evento?", opts: ["Control Correctivo.", "Control Preventivo.", "Control Detectivo.", "Control Administrativo."], ans: 0 },
+            { q: "¿Qué controles de aplicación aseguran específicamente la precisión de los datos durante el cálculo automático de impuestos dentro del ERP?", opts: ["Controles de procesamiento.", "Controles de entrada.", "Controles de salida.", "Controles de hardware."], ans: 0 },
+            { q: "El dilema sobre si la monitorización algorítmica constante afecta la autonomía personal y el bienestar de los empleados de NexoGlobal pertenece a la dimensión moral de:", opts: ["Calidad de vida.", "Propiedad.", "Acceso.", "Control."], ans: 0 },
+            { q: "Para establecer un Sistema de Gestión de Seguridad de la Información (SGSI) que abarque seguridad física y lógica, NexoGlobal debe certificarse en:", opts: ["ISO/IEC 27001.", "ISO 9001.", "ISO/IEC 12207.", "ISO/IEC 25000."], ans: 0 },
+            { q: "Al presentar el plan de sistemas ante los directores, ¿cuál es la recomendación clave para el CIO según el material?", opts: ["Ser conciso, ir al grano y dejar la mayor parte del tiempo para la charla y preguntas.", "Explicar detalladamente la arquitectura técnica de los servidores.", "Usar al menos 50 diapositivas para demostrar el trabajo realizado.", "No aceptar preguntas para evitar desvíos del tema central."], ans: 0 },
+            { q: "Según las fuentes, ¿qué porcentaje de las ganancias de una empresa se pueden explicar por la alineación exitosa de la TI con los objetivos de negocio?", opts: ["Casi la mitad (50%).", "Aproximadamente el 25%.", "Alrededor del 75%.", "Solo el 10%."], ans: 0 },
+            { q: "NexoGlobal decide contratar a un tercero para el mantenimiento de sistemas BAU (Business As Usual). Si transfiere completamente esta función, el contrato es de tipo:", opts: ["Global o Estratégico.", "Parcial o Táctico.", "Body Shopping.", "Llave en mano."], ans: 1 },
+            { q: "La inversión en la compra de nuevos edificios y maquinaria para el puerto logístico de NexoGlobal se clasifica contablemente como:", opts: ["CapEx (Gastos de Capital).", "OpEx (Gastos Operativos).", "SLA (Nivel de Servicio).", "ROI Digital."], ans: 0 },
+            { q: "Un objetivo de NexoGlobal es 'Reducir errores de carga un 15% en el próximo semestre'. ¿A qué característica SMART corresponde el componente '15%'?", opts: ["Measurable (Medible).", "Specific (Específico).", "Achievable (Alcanzable).", "Time-bound (Con plazo)."], ans: 0 },
+            { q: "¿Qué metodología tradicional asume que los requisitos del sistema son estáticos y definibles totalmente al principio del proyecto?", opts: ["Cascada (Waterfall).", "Scrum.", "Prototipado iterativo.", "Extreme Programming (XP)."], ans: 0 },
+            { q: "En el equipo Scrum de NexoGlobal, la persona responsable de saber traducir los objetivos de la empresa en 'Historias de Usuario' es:", opts: ["Product Owner.", "Scrum Master.", "Development Team.", "CIO."], ans: 0 },
+            { q: "Si los programadores de NexoGlobal trabajan 'a dos manos' frente al mismo ordenador para asegurar un código universal y organizado, están aplicando:", opts: ["Pair Programming (Programación en parejas).", "Integración Continua.", "Diseño Simple.", "Test Driven Development (TDD)."], ans: 0 },
+            { q: "¿Qué documento debe emitir NexoGlobal cuando ya conoce las soluciones necesarias y solo busca detallar los costes para cumplir los requisitos?", opts: ["RFQ (Solicitud de Presupuesto).", "RFI (Solicitud de Información).", "RFP (Solicitud de Propuesta).", "SLA (Acuerdo de Nivel de Servicio)."], ans: 0 },
+            { q: "El contrato de NexoGlobal con su proveedor de nube estipula sanciones si la disponibilidad cae por debajo del 99.9%. Esto es parte del:", opts: ["SLA (Service Level Agreement).", "RFP técnico.", "Plan de Mantenimiento Correctivo.", "Costo por conversión."], ans: 0 },
+            { q: "NexoGlobal vende sus servicios de despacho directamente a otras empresas minoristas. Este modelo se clasifica como:", opts: ["B2B (Business to Business).", "B2C (Business to Consumer).", "C2C (Consumer to Consumer).", "B2E (Business to Employee)."], ans: 0 },
+            { q: "Si NexoGlobal ofrece una plataforma gratuita para seguimiento básico pero cobra por la optimización de rutas avanzada, usa un modelo:", opts: ["Freemium.", "Enterprise.", "Transaccional.", "Bait and Hook."], ans: 0 },
+            { q: "NexoGlobal maneja datos masivos de sensores de GPS que superan la capacidad de un DBMS relacional común. El término para esto es:", opts: ["Big Data.", "Data Warehouse estructurado.", "Archivo Maestro de Producción.", "Inteligencia de Negocios (BI) clásica."], ans: 0 },
+            { q: "El sistema de NexoGlobal recomienda desviar camiones a una ruta alterna para optimizar el consumo basándose en predicciones de tráfico. Esto es un análisis:", opts: ["Prescriptivo.", "Descriptivo.", "Predictivo.", "Estadístico histórico."], ans: 0 },
+            { q: "Un algoritmo de NexoGlobal aprende a clasificar facturas fraudulentas basándose en un 'histórico' de datos ya etiquetados. Este es un tipo de aprendizaje:", opts: ["Supervisado.", "No supervisado.", "Por refuerzo.", "Basado en reglas (Sistemas Expertos)."], ans: 0 },
+            { q: "¿Qué aplicación empresarial es descrita como el 'sistema nervioso central', brindando una única fuente de verdad integrada para finanzas y RR.HH.?", opts: ["ERP.", "CRM.", "SCM.", "BPM."], ans: 0 },
+            { q: "El proceso de NexoGlobal que gestiona un activo físico (como un camión) mediante sensores para mantenimiento preventivo se llama:", opts: ["Gestión de activos empresariales (EAM).", "Gestión del ciclo de vida del producto (PLM).", "Procurement avanzado.", "Logística de Last-Mile."], ans: 0 },
+            { q: "Según el Cuadrante Mágico de Gartner, las empresas con gran habilidad de ejecución hoy pero poca comprensión del futuro son:", opts: ["Retadores o aspirantes.", "Líderes.", "Visionarios.", "Jugadores de nicho."], ans: 0 },
+            { q: "¿En qué fase del Hype Cycle el interés se desvanece porque los experimentos e implementaciones de la tecnología no cumplen las expectativas?", opts: ["Abismo de desilusión.", "Lanzamiento.", "Pico de expectativas sobredimensionadas.", "Rampa de consolidación."], ans: 0 },
+            { q: "NexoGlobal desea rediseñar de forma radical sus procesos para lograr mejoras dramáticas (cientos de porcentaje). ¿Qué disciplina aplica?", opts: ["BPR (Reingeniería de Procesos).", "BPM (Gestión de Procesos).", "TQM (Gestión de la Calidad Total).", "Six Sigma."], ans: 0 },
+            { q: "¿Qué modelo de nube permite a NexoGlobal alquilar un terreno (servidores y almacenamiento) para construir lo que deseen con sus propios materiales?", opts: ["IaaS (Infraestructura como Servicio).", "PaaS (Plataforma como Servicio).", "SaaS (Software como Servicio).", "FaaS (Función como Servicio)."], ans: 0 },
+            { q: "NexoGlobal combina una nube privada para datos críticos con una pública para Big Data. Esta implementación se denomina:", opts: ["Nube Híbrida.", "Nube Pública Compartida.", "Multinube.", "Servicio Local Heredado."], ans: 0 },
+            { q: "¿Qué subconjunto del Machine Learning está inspirado en el cerebro humano y se usa para modelar relaciones complejas en capas de nodos?", opts: ["Redes Neuronales.", "Sistemas Expertos.", "IA Generativa.", "Algoritmos de Regresión Lineal."], ans: 0 },
+            { q: "Los dispositivos IoT de NexoGlobal que solo envían instrucciones a objetos físicos se clasifican como:", opts: ["Interruptores.", "Sensores.", "Nodos de consenso.", "Agentes de BI."], ans: 0 },
+            { q: "Una tecnología de NexoGlobal superpone datos virtuales sobre la vista real de los técnicos en el puerto. Esto es:", opts: ["Realidad Aumentada.", "Realidad Virtual.", "Gemelo Digital Inmersivo.", "VRML Estándar."], ans: 0 },
+            { q: "Un 'bot' de NexoGlobal carga facturas automáticamente al ERP en un servicio remoto sin participación humana. Esto es:", opts: ["RPA no asistida.", "RPA asistida.", "Inteligencia Artificial Generativa.", "Mecanismo Detectivo Manual."], ans: 0 }
+        ];
+
+        // Clonamos el array para poder eliminar preguntas y evitar repeticiones
+        let availableQuestions = [...allQuestions];
+        let currentQuestionObj = null;
+
+        let corrects = 0;
+        let incorrects = 0;
+        let totalAnswered = 0;
+
+        const questionTextElement = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const nextBtn = document.getElementById('next-btn');
+        const correctCountElement = document.getElementById('correct-count');
+        const incorrectCountElement = document.getElementById('incorrect-count');
+        const remainingCountElement = document.getElementById('remaining-count');
+
+        function initQuiz() {
+            document.getElementById('remaining-count').innerText = availableQuestions.length;
+            loadNextQuestion();
+        }
+
+        function loadNextQuestion() {
+            // Si ya no quedan preguntas, mostramos la pantalla final
+            if (availableQuestions.length === 0) {
+                document.getElementById('question-screen').style.display = 'none';
+                document.getElementById('finish-screen').style.display = 'block';
+                document.getElementById('final-score').innerText = `${corrects} / ${allQuestions.length}`;
+                return;
+            }
+
+            // Esconder botón siguiente
+            nextBtn.style.display = 'none';
+
+            // Elegir una pregunta aleatoria y sacarla del array (splice)
+            const randomIndex = Math.floor(Math.random() * availableQuestions.length);
+            currentQuestionObj = availableQuestions.splice(randomIndex, 1)[0];
+
+            // Renderizar el texto de la pregunta
+            questionTextElement.innerText = currentQuestionObj.q;
+
+            // Renderizar opciones
+            optionsContainer.innerHTML = '';
+            currentQuestionObj.opts.forEach((optionText, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = optionText;
+                btn.onclick = () => selectAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            // Actualizar contador restante
+            remainingCountElement.innerText = availableQuestions.length;
+        }
+
+        function selectAnswer(selectedIndex, selectedButton) {
+            // Deshabilitar todos los botones para que no se pueda responder dos veces
+            const allButtons = optionsContainer.querySelectorAll('.option-btn');
+            allButtons.forEach(btn => btn.disabled = true);
+
+            const isCorrect = (selectedIndex === currentQuestionObj.ans);
+
+            if (isCorrect) {
+                selectedButton.classList.add('correct');
+                corrects++;
+                correctCountElement.innerText = corrects;
+            } else {
+                selectedButton.classList.add('incorrect');
+                incorrects++;
+                incorrectCountElement.innerText = incorrects;
+
+                // Si se equivocó, le mostramos cuál era la correcta
+                allButtons[currentQuestionObj.ans].classList.add('correct');
+            }
+
+            // Mostrar el botón para avanzar
+            nextBtn.style.display = 'block';
+        }
+
+        // Arrancar el simulador
+        initQuiz();
+    </script>
+</body>
+
+</html>
